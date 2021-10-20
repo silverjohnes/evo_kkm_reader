@@ -5,15 +5,16 @@ import ops
 
 
 # Тестовый режим
-InTest = 0
+InTest = 1
 TestInputFile = 'logs.txt'
 
 
-# Определение рабочей папки
+# Определение рабочей папки для i-того количества входящих файлов
 if len(sys.argv) > 1: 
 	os.chdir(os.path.dirname(sys.argv[1]))
 elif InTest == 0:
-	print("Для обработки логов перетяните их на файл скрипта.\nРабота завершена.\n")
+	print("Скрипт работает только если перетянуть на него файлы логов ККТ.\n")
+	os.system("pause")
 	quit()
 
 print("Сформированы файлы:")
@@ -47,6 +48,6 @@ for i in range(len(sys.argv)):
 			# КОНЕЦ ОБРАБОТОК СТРОК
 			#
 
-	print(" -", outputf)
-print("Завершено.\n")
+	print("", outputf)
+print("Работа завершена.\n")
 #os.system("pause")
