@@ -1,44 +1,37 @@
-import os, sys
+import os, sys, dict
 from dict import dict
 
+dict.check()
+
+# Тестовый режим
+InTest = 1
+TestInputFile = 'logs.txt'
 
 # Рабочая папка
-os.chdir(os.path.dirname(sys.argv[0]))
+#os.chdir(os.path.dirname(sys.argv[0]))
 
-# Проверка на drag & drop
-if len(sys.argv) > 1:
-	inputf = os.path.basename(sys.argv[1])
-	outputf = "output_" + os.path.basename(sys.argv[1])
-else: # Имена файлов по-умолчанию если нет drag & drop
-	inputf = 'logs-long.txt'
-	outputf = 'output_logs.txt'
-
-
-# Очистка файла вывода если он существует
-flush = open(outputf, 'w')
-flush.close()
+# Определение рабочей папки
+if len(sys.argv) > 1: 
+	os.chdir(os.path.dirname(sys.argv[1]))
+elif InTest == 0:
+	print("Для обработки логов перетяните их на файл скрипта.\nРабота завершена.\n")
+	quit()
 
 
-
-def convert(text):	# Обработка текста в строке
-	output = open(outputf, 'a', encoding='utf-8')
-	header = text[0:20]
-	if header[15] == '>':
-		text = text[0:13] + '>>>> ' + text[21:]
-		output.writelines(text)
-	else:
-		output.writelines(text)
-	output.close()
-
-
-file = open(inputf, encoding='utf-8') # Передача строки на обработку
-try:
-	for row in file:
-		convert(row)
-finally:
-	file.close()
-
-
-
-
+for i in range(len(sys.argv)):
+	if len(sys.argv) > 1: # Проверка на drag & drop
+		inputf = os.path.basename(sys.argv[i+1])
+		outputf = "output_" + os.path.basename(sys.argv[i+1])
+	elif InTest == 1: # Имена файлов по-умолчанию для тестового режима
+		os.chdir(os.path.dirname(sys.argv[0]))
+		inputf = TestInputFile
+		outputf = 'output_logs.txt'	
+	with open(inputf, 'r', encoding='utf-8') as input, open(outputf, 'w', encoding='utf-8') as output:
+		for line in input:
+			if len(line) > 10:  # проверка для обработки пустых строк
+				if line[15] == '>':
+					line = line[0:13] + '>>>> ' + line[18:]
+			output.write(line)
+	
+print("Готово\n")
 os.system("pause")

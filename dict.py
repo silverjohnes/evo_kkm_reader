@@ -19,5 +19,6 @@ dict = {
 'dEE' : ' ', 'dEF' : ' ', 'df0' : 'Ё', 'df1' : 'ё', 'df2' : ' ', 'df3' : ' ', 'df4' : ' ', 'df5' : ' ', 'df6' : ' ', 'df7' : ' ', 'df8' : ' ', 'df9' : ' ', 'dfA' : ' ', 'dfB' : ' ',
 'dfC' : ' ', 'dfD' : ' '}
 
-# Словарь загружен?
-#print(dict['d10'], dict['d88'], dict['d6D'],dict['d80'], dict['d7E'], dict['d8D'], dict['d99'], dict['dA0'],dict['d85'], dict['d7E'], dict['d81'], dict['d8D'], dict['d77'], dict['d84'], dict['d83'], dict['d8A'], dict['d2C'], sep='')
+
+def check():
+	print(dict['d10'], dict['d88'], dict['d6D'],dict['d80'], dict['d7E'], dict['d8D'], dict['d99'], dict['dA0'],dict['d85'],dict['d7E'], dict['d81'], dict['d8D'], dict['d77'], dict['d84'], dict['d83'], dict['d8A'], dict['d2C'], sep='')
