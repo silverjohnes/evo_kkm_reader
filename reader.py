@@ -5,7 +5,7 @@ import ops
 
 
 # Тестовый режим
-InTest = 1
+InTest = 0
 TestInputFile = 'logs.txt'
 
 
