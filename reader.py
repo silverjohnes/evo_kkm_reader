@@ -1,8 +1,5 @@
 import os, sys
-import win_unicode_console
 from dict import dict
-
-win_unicode_console.enable()
 
 
 # Рабочая папка
