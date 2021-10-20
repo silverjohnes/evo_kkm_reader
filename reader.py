@@ -1,7 +1,6 @@
 import os, sys, dict
 from dict import dict
 
-dict.check()
 
 # Тестовый режим
 InTest = 1
