@@ -8,10 +8,10 @@
 # ==============================================================
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
-import wrapper
+import process
 
 
-inTest = 1
+inTest = 0
 testInputFile = 'logs-long.txt'
 outputPrefix = 'output_'
 
@@ -37,7 +37,7 @@ for i in range(len(sys.argv)):
 		for line in input:
 			if line[14:16] == "> ":
 				command = line[16:18]
-			output.write(wrapper.wrap(line, command)) # То, ради чего всё затевалось
+			output.write(process.process(line, command)) # То, ради чего всё затевалось
 			
 
 	print("", outputFile) # Перечисление обработанных файлов
