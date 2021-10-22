@@ -4,16 +4,15 @@
 #  чтения логов человеком. Разночтения между АТОЛом и Эвотором
 #  трактуются в пользу варианта, который реализован в Эвоторе.
 #
-# ==============================================================
-#  Домашняя страница: github.com/silverjohnes/evo_kkm_reader
+#       http://github.com/silverjohnes/evo_kkm_reader
 # ==============================================================
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
-import ops
+import wrapper
 
 
-inTest = 0
-testInputFile = 'logs.txt'
+inTest = 1
+testInputFile = 'logs-long.txt'
 outputPrefix = 'output_'
 
 
@@ -21,7 +20,7 @@ outputPrefix = 'output_'
 if len(sys.argv) > 1: 
 	os.chdir(os.path.dirname(sys.argv[1]))
 elif inTest == 0:
-	print("Скрипт работает только если перетянуть на него файлы логов ККТ.\n")
+	print("Скрипт облегчает чтение логов ККТ\n\nДля запуска перетяните файлы с логами на файл ", os.unlink(__file__), sep="")
 	os.system("pause")
 	quit()
 
@@ -33,9 +32,12 @@ for i in range(len(sys.argv)):
 		os.chdir(os.path.dirname(__file__))
 		inputFile = testInputFile
 	outputFile = outputPrefix + inputFile
+	command = "00" # Управляющая команда, на которую обрабатывается ответ
 	with open(inputFile, 'r', encoding='utf-8') as input, open(outputFile, 'w', encoding='utf-8') as output:
 		for line in input:
-			output.write(ops.linewrapper(line)) # То, ради чего всё затевалось
+			if line[14:16] == "> ":
+				command = line[16:18]
+			output.write(wrapper.wrap(line, command)) # То, ради чего всё затевалось
 			
 
 	print("", outputFile) # Перечисление обработанных файлов
