@@ -12,7 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
 import ops
 
 
-inTest = 1
+inTest = 0
 testInputFile = 'logs.txt'
 outputPrefix = 'output_'
 
