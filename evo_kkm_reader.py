@@ -12,7 +12,7 @@ import process
 
 
 inTest = 0
-testInputFile = 'logs-long.txt'
+testInputFile = 'logs.txt'
 outputPrefix = 'output_'
 
 
@@ -20,7 +20,7 @@ outputPrefix = 'output_'
 if len(sys.argv) > 1: 
 	os.chdir(os.path.dirname(sys.argv[1]))
 elif inTest == 0:
-	print("Скрипт облегчает чтение логов ККТ\n\nДля запуска перетяните файлы с логами на файл ", os.unlink(__file__), sep="")
+	print("Перетяните файлы с логами из любой папки на", os.path.basename(__file__), "\n")
 	os.system("pause")
 	quit()
 
