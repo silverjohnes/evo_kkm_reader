@@ -6,10 +6,10 @@ import sqlite3
 from dict import dict
 
 # Подключение БД
-hddDb = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'db.db'))
 db = sqlite3.connect(':memory:')
-hddDb.backup(db)
-hddDb.close()
+reaDb = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'db.db'))
+reaDb.backup(db)
+reaDb.close()
 cursor = db.cursor()
 
 
@@ -25,7 +25,7 @@ def process(line, command):
 			line = line.rstrip() + " Вход в режим"
 			var = line[19:21],
 			cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", var)
-			line = line.strip() + cursor.fetchone()[0] + "\n"
+			line = line.rstrip() + cursor.fetchone()[0] + "\n"
 				
 
 		# 2. Ответ <55h> <Код ошибки (1)>
@@ -35,12 +35,12 @@ def process(line, command):
 				line = line.rstrip() + " Ответ:"
 				var = line[19:21],
 				cursor.execute("SELECT DESC FROM ERROR WHERE HEX = ?", var)
-				line = line.rstrip() + " " + str.lower(cursor.fetchone()[0]) + "\n"
+				line = line.rstrip() + " " + cursor.fetchone()[0] + "\n"
 			elif command == "45": # Конкретно к какой комманде применим
 				line = line.rstrip() + " В режиме:"
 				var = line[19:21],
 				cursor.execute("SELECT DESC FROM STATUS_CODE WHERE BIN = ?", var)
-				line = line.rstrip() + " " + str.lower(cursor.fetchone()[0]) + "\n"
+				line = line.rstrip() + " " + cursor.fetchone()[0] + "\n"
 	
 	
 	
