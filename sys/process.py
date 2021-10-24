@@ -27,8 +27,7 @@ def process(line, command):
 			if command == '56':
 				var = line[19:21],
 				cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", var)				
-				list = [line.rstrip(), "Вход в режим", cursor.fetchone()[0], "\n"]
-				line = " ".join(list)
+				line = " ".join([line.rstrip(), "Вход в режим", cursor.fetchone()[0], "\n"])
 			
 			'''			
 			if command == '56':
