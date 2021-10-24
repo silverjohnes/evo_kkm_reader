@@ -24,18 +24,24 @@ def process(line, command):
 		if line[14:16] == '> ':
 		#
 		
+
 			if command == '56':
 				var = line[19:21],
 				cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", var)				
 				line = " ".join([line.rstrip(), "Вход в режим", cursor.fetchone()[0], "\n"])
 			
-			'''			
-			if command == '56':
-				line = line.rstrip() + " Вход в режим"
-				var = line[19:21],
-				cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", var)
-				line = line.rstrip() + cursor.fetchone()[0] + "\n"'''
-				
+			
+			elif command == 'A4':
+				hex_2 = line[19:21],
+				cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'A4' AND HEX_2 = ?", hex_2)				
+				line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+			
+			
+			elif command == 'EF':
+				hex_2 = line[19:21],
+				cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EF' AND HEX_2 = ?", hex_2)				
+				line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+			
 				
 			if command == '3F':
 				line = line.rstrip() + " Запрос состояния ККТ\n"
@@ -277,58 +283,6 @@ def process(line, command):
 				line = line.rstrip() + " Начать считывание картинки\n"
 			
 			
-			if command == 'A4':
-				fncommand = line[19:21]
-				
-				if fncommand == "10":
-					line = line.rstrip() + " Запрос параметров текущей смены\n"
-					
-				if fncommand == "20":
-					line = line.rstrip() + " Получить статус информационного обмена с ФН\n"
-					
-				if fncommand == "30":
-					line = line.rstrip() + " Запрос статуса ФН\n"
-					
-				if fncommand == "31":
-					line = line.rstrip() + " Запрос номера ФН\n"
-					
-				if fncommand == "32":
-					line = line.rstrip() + " Запрос срока действия ФН\n"
-					
-				if fncommand == "33":
-					line = line.rstrip() + " Запрос версии ФН\n"
-					
-				if fncommand == "35":
-					line = line.rstrip() + " Запрос последних ошибок ФН\n"
-					
-				if fncommand == "40":
-					line = line.rstrip() + " Найти фискальный документ по номеру\n"
-					
-				if fncommand == "41":
-					line = line.rstrip() + " Запрос квитанции о получении фискального документа ОФД по номеру документа\n"
-					
-				if fncommand == "42":
-					line = line.rstrip() + " Запрос количества ФД, на которые нет квитанции\n"
-					
-				if fncommand == "43":
-					line = line.rstrip() + " Запрос итогов фискализации ФН\n"
-					
-				if fncommand == "44":
-					line = line.rstrip() + " Запрос параметра фискализации ФН\n"
-					
-				if fncommand == "45":
-					line = line.rstrip() + " Запрос фискального документа в TLV формате\n"
-					
-				if fncommand == "46":
-					line = line.rstrip() + " Чтение TLV фискального документа\n"
-					
-				if fncommand == "47":
-					line = line.rstrip() + " Чтение TLV параметров фискализации\n"
-					
-				if fncommand == "60":
-					line = line.rstrip() + " Инициализация массо-габаритного макета ФН\n"
-			
-			
 			if command == 'A5':
 				line = line.rstrip() + " Получить тип устройства\n"
 			
@@ -434,26 +388,40 @@ def process(line, command):
 				line = line.rstrip() + " Допечать отчета\n"
 			
 			
-			if command == 'EF':
-				subcommand = line[19:21]
-				
-				if subcommand == "00":
-					line = line.rstrip() + " Получить статус ЭЖ\n"
-					
-				if subcommand == "01":
-					line = line.rstrip() + " Начать чтение записии из ЭЖ\n"
-					
-				if subcommand == "02":
-					line = line.rstrip() + " Получить следующую TLV запись из ЭЖ\n"
-					
-				if subcommand == "03":
-					line = line.rstrip() + " Очистить ЭЖ\n"
-			
-			
 			if command == '00':
 				line = line.rstrip() + " ХХ\n"
-			
-			
+					
+			# Вариант обработки через SQL.
+			#if command == '56':
+			#	hex_2 = line[19:21],
+			#	cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", hex_2)				
+			#	line = " ".join([line.rstrip(), "Вход в режим", cursor.fetchone()[0], "\n"])
+			#
+			#		
+			#elif command == 'CE':
+			#	if line [19:21] == "41":  # Не меняй способ обработки CE, здесь нужно именно так!
+			#		line = " ".join([line.rstrip(), "Перезагрузка ККТ\n"])
+			#	else:
+			#		line = " ".join([line.rstrip(), "Выключение\n"])
+			#
+			#
+			#elif command == 'A4':
+			#	hex_2 = line[19:21],
+			#	cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'A4' AND HEX_2 = ?", hex_2)				
+			#	line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+			#
+			#
+			#elif command == 'EF':
+			#	hex_2 = line[19:21],
+			#	cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EF' AND HEX_2 = ?", hex_2)				
+			#	line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+			#
+			#
+			#else:
+			#	cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = ?", (command,))
+			#	line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])v
+			#
+
 			
 		# 
 		# ОБРАБОТЧИКИ ОТВЕТОВ:
