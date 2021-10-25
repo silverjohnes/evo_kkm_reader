@@ -26,370 +26,377 @@ def process(line, command):
 		
 
 			if command == '56':
-				var = line[19:21],
-				cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", var)				
-				line = " ".join([line.rstrip(), "Вход в режим", cursor.fetchone()[0], "\n"])
-			
+				hex_2 = line[19:21],
+				try:
+					cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", hex_2)				
+					line = " ".join([line.rstrip(), "Вход в режим", cursor.fetchone()[0], "\n"])
+				except:
+					line = " ".join([line.rstrip(), "=== Ошибка обработки строки ===\n"])
 			
 			elif command == 'A4':
 				hex_2 = line[19:21],
-				cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'A4' AND HEX_2 = ?", hex_2)				
-				line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
-			
+				try:
+					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'A4' AND HEX_2 = ?", hex_2)					
+					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+				except:
+					line = " ".join([line.rstrip(), "=== Ошибка обработки строки ===\n"])
 			
 			elif command == 'EF':
 				hex_2 = line[19:21],
-				cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EF' AND HEX_2 = ?", hex_2)				
-				line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
-			
+				try:
+					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EF' AND HEX_2 = ?", hex_2)				
+					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+				except:
+					line = " ".join([line.rstrip(), "=== Ошибка обработки строки ===\n"])
+					
 				
 			if command == '3F':
-				line = line.rstrip() + " Запрос состояния ККТ\n"
+				line = " ".join([line.strip(), "Запрос состояния ККТ\n"])
 			
 			
 			if command == '43':
-				line = line.rstrip() + " Скидка\n"
+				line = " ".join([line.strip(), "Скидка\n"])
 			
 			
 			if command == '45':
-				line = line.rstrip() + " Запрос кода состояния ККТ\n"
+				line = " ".join([line.strip(), "Запрос кода состояния ККТ\n"])
 			
 			
 			if command == '46':
-				line = line.rstrip() + " Чтение таблицы\n"
+				line = " ".join([line.strip(), "Чтение таблицы\n"])
 			
 			
 			if command == '47':
-				line = line.rstrip() + " Гудок\n"
+				line = " ".join([line.strip(), "Гудок\n"])
 			
 			
 			if command == '48':
-				line = line.rstrip() + " Выход из текущего режима\n"
+				line = " ".join([line.strip(), "Выход из текущего режима\n"])
 			
 			
 			if command == '49':
-				line = line.rstrip() + " Внесение денег\n"
+				line = " ".join([line.strip(), "Внесение денег\n"])
 			
 			
 			if command == '4A':
-				line = line.rstrip() + " Закрыть чек (со сдачей)\n"
+				line = " ".join([line.strip(), "Закрыть чек (со сдачей)\n"])
 			
 			
 			if command == '4B':
-				line = line.rstrip() + " Программирование времени\n"
+				line = " ".join([line.strip(), "Программирование времени\n"])
 			
 			
 			if command == '4C':
-				line = line.rstrip() + " Печать строки\n"
+				line = " ".join([line.strip(), "Печать строки\n"])
 			
 			
 			if command == '4D':
-				line = line.rstrip() + " Запрос наличных\n"
+				line = " ".join([line.strip(), "Запрос наличных\n"])
 			
 			
 			if command == '4F':
-				line = line.rstrip() + " Выплата денег\n"
+				line = " ".join([line.strip(), "Выплата денег\n"])
 			
 			
 			if command == '50':
-				line = line.rstrip() + " Программирование таблицы\n"
+				line = " ".join([line.strip(), "Программирование таблицы\n"])
 			
 			
 			if command == '58':
-				line = line.rstrip() + " Получение последнего сменного итога\n"
+				line = " ".join([line.strip(), "Получение последнего сменного итога\n"])
 			
 			
 			if command == '59':
-				line = line.rstrip() + " Аннулирование всего чека\n"
+				line = " ".join([line.strip(), "Аннулирование всего чека\n"])
 			
 			
 			if command == '5A':
-				line = line.rstrip() + " Снятие суточного отчета с гашением (закрытие смены)\n"
+				line = " ".join([line.strip(), "Снятие суточного отчета с гашением (закрытие смены)\n"])
 			
 			
 			if command == '61':
-				line = line.rstrip() + " Ввод заводского номера\n"
+				line = " ".join([line.strip(), "Ввод заводского номера\n"])
 			
 			
 			if command == '62':
-				line = line.rstrip() + " Активизация памяти ПД\n"
+				line = " ".join([line.strip(), "Активизация памяти ПД\n"])
 			
 			
 			if command == '64':
-				line = line.rstrip() + " Программирование даты\n"
+				line = " ".join([line.strip(), "Программирование даты\n"])
 			
 			
 			if command == '65':
-				line = line.rstrip() + " Отчет ППД по диапазону дат\n"
+				line = " ".join([line.strip(), "Отчет ППД по диапазону дат\n"])
 			
 			
 			if command == '66':
-				line = line.rstrip() + " Отчет ППД по диапазону смен\n"
+				line = " ".join([line.strip(), "Отчет ППД по диапазону смен\n"])
 			
 			
 			if command == '67':
-				line = line.rstrip() + " Начало снятия отчета без гашения\n"
+				line = " ".join([line.strip(), "Начало снятия отчета без гашения\n"])
 			
 			
 			if command == '6B':
-				line = line.rstrip() + " Технологическое обнуление ККТ\n"
+				line = " ".join([line.strip(), "Технологическое обнуление ККТ\n"])
 			
 			
 			if command == '6C':
-				line = line.rstrip() + " Печать клише чека\n"
+				line = " ".join([line.strip(), "Печать клише чека\n"])
 			
 			
 			if command == '6D':
-				line = line.rstrip() + " Ввод кода защиты ККТ\n"
+				line = " ".join([line.strip(), "Ввод кода защиты ККТ\n"])
 			
 			
 			if command == '71':
-				line = line.rstrip() + " Инициализация таблиц нач. значениями\n"
+				line = " ".join([line.strip(), "Инициализация таблиц нач. значениями\n"])
 			
 			
 			if command == '73':
-				line = line.rstrip() + " Печать нижней части чека\n"
+				line = " ".join([line.strip(), "Печать нижней части чека\n"])
 			
 			
 			if command == '74':
-				line = line.rstrip() + " Запрос активизированности кода защиты ККТ\n"
+				line = " ".join([line.strip(), "Запрос активизированности кода защиты ККТ\n"])
 			
 			
 			if command == '75':
-				line = line.rstrip() + " Отрезать чек\n"
+				line = " ".join([line.strip(), "Отрезать чек\n"])
 			
 			
 			if command == '77':
-				line = line.rstrip() + " Общее гашение\n"
+				line = " ".join([line.strip(), "Общее гашение\n"])
 			
 			
 			if command == '79':
-				line = line.rstrip() + " Начало считывания штрихкода\n"
+				line = " ".join([line.strip(), "Начало считывания штрихкода\n"])
 			
 			
 			if command == '7A':
-				line = line.rstrip() + " Получить очередной блок данных\n"
+				line = " ".join([line.strip(), "Получить очередной блок данных\n"])
 			
 			
 			if command == '7B':
-				line = line.rstrip() + " Очистить массив штрихкодов\n"
+				line = " ".join([line.strip(), "Очистить массив штрихкодов\n"])
 			
 			
 			if command == '7C':
-				line = line.rstrip() + " Печать штрихкода по номеру\n"
+				line = " ".join([line.strip(), "Печать штрихкода по номеру\n"])
 			
 			
 			if command == '7D':
-				line = line.rstrip() + " Состояние массива штрихкодов и картинок\n"
+				line = " ".join([line.strip(), "Состояние массива штрихкодов и картинок\n"])
 			
 			
 			if command == '80':
-				line = line.rstrip() + " Открыть денежный ящик\n"
+				line = " ".join([line.strip(), "Открыть денежный ящик\n"])
 			
 			
 			if command == '82':
-				line = line.rstrip() + " Демонстрационная печать\n"
+				line = " ".join([line.strip(), "Демонстрационная печать\n"])
 			
 			
 			if command == '84':
-				line = line.rstrip() + " Получение очередного блока данных ПО ККТ\n"
+				line = " ".join([line.strip(), "Получение очередного блока данных ПО ККТ\n"])
 			
 			
 			if command == '85':
-				line = line.rstrip() + " Импульсное открытие денежного ящика\n"
+				line = " ".join([line.strip(), "Импульсное открытие денежного ящика\n"])
 			
 			
 			if command == '86':
-				line = line.rstrip() + " Получить очередную строку картинки по номеру\n"
+				line = " ".join([line.strip(), "Получить очередную строку картинки по номеру\n"])
 			
 			
 			if command == '87':
-				line = line.rstrip() + " Печать поля\n"
+				line = " ".join([line.strip(), "Печать поля\n"])
 			
 			
 			if command == '88':
-				line = line.rstrip() + " Звуковой сигнал\n"
+				line = " ".join([line.strip(), "Звуковой сигнал\n"])
 			
 			
 			if command == '8A':
-				line = line.rstrip() + " Очистить массив картинок\n"
+				line = " ".join([line.strip(), "Очистить массив картинок\n"])
 			
 			
 			if command == '8B':
-				line = line.rstrip() + " Добавить строку картинки\n"
+				line = " ".join([line.strip(), "Добавить строку картинки\n"])
 			
 			
 			if command == '8C':
-				line = line.rstrip() + " Статус массива картинок\n"
+				line = " ".join([line.strip(), "Статус массива картинок\n"])
 			
 			
 			if command == '8D':
-				line = line.rstrip() + " Печать картинки по номеру\n"
+				line = " ".join([line.strip(), "Печать картинки по номеру\n"])
 			
 			
 			if command == '8E':
-				line = line.rstrip() + " Печать картинки с ПК\n"
+				line = " ".join([line.strip(), "Печать картинки с ПК\n"])
 			
 			
 			if command == '8F':
-				line = line.rstrip() + " Передать данные в порт\n"
+				line = " ".join([line.strip(), "Передать данные в порт\n"])
 			
 			
 			if command == '90':
-				line = line.rstrip() + " Параметры картинки в массиве\n"
+				line = " ".join([line.strip(), "Параметры картинки в массиве\n"])
 			
 			
 			if command == '91':
-				line = line.rstrip() + " Считать регистр\n"
+				line = " ".join([line.strip(), "Считать регистр\n"])
 			
 			
 			if command == '92':
-				line = line.rstrip() + " Открыть чек\n"
+				line = " ".join([line.strip(), "Открыть чек\n"])
 			
 			
 			if command == '95':
-				line = line.rstrip() + " Повторная печать последнего документа\n"
+				line = " ".join([line.strip(), "Повторная печать последнего документа\n"])
 			
 			
 			if command == '97':
-				line = line.rstrip() + " Очистка буфера последнего документа\n"
+				line = " ".join([line.strip(), "Очистка буфера последнего документа\n"])
 			
 			
 			if command == '99':
-				line = line.rstrip() + " Расчет по чеку\n"
+				line = " ".join([line.strip(), "Расчет по чеку\n"])
 			
 			
 			if command == '9A':
-				line = line.rstrip() + " Открыть смену\n"
+				line = " ".join([line.strip(), "Открыть смену\n"])
 			
 			
 			if command == '9B':
-				line = line.rstrip() + " Сторно расчета по чеку\n"
+				line = " ".join([line.strip(), "Сторно расчета по чеку\n"])
 			
 			
 			if command == '9C':
-				line = line.rstrip() + " Начало считывания дампа\n"
+				line = " ".join([line.strip(), "Начало считывания дампа\n"])
 			
 			
 			if command == '9D':
-				line = line.rstrip() + " Получение версии\n"
+				line = " ".join([line.strip(), "Получение версии\n"])
 			
 			
 			if command == '9E':
-				line = line.rstrip() + " Закрыть картинку\n"
+				line = " ".join([line.strip(), "Закрыть картинку\n"])
 			
 			
 			if command == '9F':
-				line = line.rstrip() + " Начать считывание картинки\n"
+				line = " ".join([line.strip(), "Начать считывание картинки\n"])
 			
 			
 			if command == 'A5':
-				line = line.rstrip() + " Получить тип устройства\n"
+				line = " ".join([line.strip(), "Получить тип устройства\n"])
 			
 			
 			if command == 'A6':
-				line = line.rstrip() + " Активизация ФН\n"
+				line = " ".join([line.strip(), "Активизация ФН\n"])
 			
 			
 			if command == 'A7':
-				line = line.rstrip() + " Закрытие архива ФН\n"
+				line = " ".join([line.strip(), "Закрытие архива ФН\n"])
 			
 			
 			if command == 'A8':
-				line = line.rstrip() + " Печать итогов регистрации/перерегистрации ККТ\n"
+				line = " ".join([line.strip(), "Печать итогов регистрации/перерегистрации ККТ\n"])
 			
 			
 			if command == 'AB':
-				line = line.rstrip() + " Печать документа по номеру\n"
+				line = " ".join([line.strip(), "Печать документа по номеру\n"])
 			
 			
 			if command == 'B3':
-				line = line.rstrip() + " Получить последний код ошибки\n"
+				line = " ".join([line.strip(), "Получить последний код ошибки\n"])
 			
 			
 			if command == 'B8':
-				line = line.rstrip() + " Регистрация налога на весь чек\n"
+				line = " ".join([line.strip(), "Регистрация налога на весь чек\n"])
 			
 			
 			if command == 'C1':
-				line = line.rstrip() + " Печать штрихкода\n"
+				line = " ".join([line.strip(), "Печать штрихкода\n"])
 			
 			
 			if command == 'C2':
-				line = line.rstrip() + " Печать штрихкода (добавление данных)\n"
+				line = " ".join([line.strip(), "Печать штрихкода (добавление данных)\n"])
 			
 			
 			if command == 'C3':
-				line = line.rstrip() + " Получить копию последнего документа (в электронном виде)\n"
+				line = " ".join([line.strip(), "Получить копию последнего документа (в электронном виде)\n"])
 			
 			
 			if command == 'CE':
 				
 				if line[19:21] == "41":
-					line = line.rstrip() + " Перезагрузка ККТ\n"
+					line = " ".join([line.strip(), "Перезагрузка ККТ\n"])
 					
 				else:	
-					line = line.rstrip() + " Выключение\n"
+					line = " ".join([line.strip(), "Выключение\n"])
 			
 			
 			if command == 'E0':
-				line = line.rstrip() + " Подать питание на порт\n"
+				line = " ".join([line.strip(), "Подать питание на порт\n"])
 			
 			
 			if command == 'E1':
-				line = line.rstrip() + " Отправить данные в порт\n"
+				line = " ".join([line.strip(), "Отправить данные в порт\n"])
 			
 			
 			if command == 'E2':
-				line = line.rstrip() + " Синхронно получить данные с порта\n"
+				line = " ".join([line.strip(), "Синхронно получить данные с порта\n"])
 			
 			
 			if command == 'E3':
-				line = line.rstrip() + " Асинхронно получить данные с порта\n"
+				line = " ".join([line.strip(), "Асинхронно получить данные с порта\n"])
 			
 			
 			if command == 'E4':
-				line = line.rstrip() + " Настройка соединения с портом\n"
+				line = " ".join([line.strip(), "Настройка соединения с портом\n"])
 			
 			
 			if command == 'E5':
-				line = line.rstrip() + " Запрос параметров порта\n"
+				line = " ".join([line.strip(), "Запрос параметров порта\n"])
 			
 			
 			if command == 'E6':
-				line = line.rstrip() + " Регистрация позиции\n"
+				line = " ".join([line.strip(), "Регистрация позиции\n"])
 			
 			
 			if command == 'E8':
-				line = line.rstrip() + " Запись реквизита\n"
+				line = " ".join([line.strip(), "Запись реквизита\n"])
 			
 			
 			if command == 'E9':
-				line = line.rstrip() + " Чтение реквизита\n"
+				line = " ".join([line.strip(), "Чтение реквизита\n"])
 			
 			
 			if command == 'EA':
-				line = line.rstrip() + " Комплексная команда регистрации позиции: начать формирование позиции\n"
+				line = " ".join([line.strip(), "Комплексная команда регистрации позиции: начать формирование позиции\n"])
 			
 			
 			if command == 'EB':
-				line = line.rstrip() + " Комплексная команда формирования позиции: завершить формирование позиции\n"
+				line = " ".join([line.strip(), "Комплексная команда формирования позиции: завершить формирование позиции\n"])
 			
 			
 			if command == 'EC':
-				line = line.rstrip() + " \n"
+				line = " ".join([line.strip(), "Запрос онлайн-обновления\n"])
 			
 			
 			if command == 'ED':
-				line = line.rstrip() + " Программирование даты и времени\n"
+				line = " ".join([line.strip(), "Программирование даты и времени\n"])
 			
 			
 			if command == 'EE':
-				line = line.rstrip() + " Допечать отчета\n"
+				line = " ".join([line.strip(), "Допечать отчета\n"])
 			
 			
 			if command == '00':
-				line = line.rstrip() + " ХХ\n"
+				line = " ".join([line.strip(), "ХХ\n"])
 					
 			# Вариант обработки через SQL.
 			#if command == '56':
