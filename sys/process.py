@@ -31,7 +31,7 @@ def process(line, command):
 					cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", hex_2)				
 					line = " ".join([line.rstrip(), "Вход в режим", cursor.fetchone()[0], "\n"])
 				except:
-					line = " ".join([line.rstrip(), "=== Ошибка обработки строки ===\n"])
+					line = " ".join([line.rstrip(), "=== Ошибка обработки строки, подкомманда не известна ===\n"])
 			
 			elif command == 'A4':
 				hex_2 = line[19:21],
@@ -39,7 +39,7 @@ def process(line, command):
 					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'A4' AND HEX_2 = ?", hex_2)					
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 				except:
-					line = " ".join([line.rstrip(), "=== Ошибка обработки строки ===\n"])
+					line = " ".join([line.rstrip(), "=== Ошибка обработки строки, подкомманда не известна ===\n"])
 			
 			elif command == 'EF':
 				hex_2 = line[19:21],
@@ -47,7 +47,7 @@ def process(line, command):
 					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EF' AND HEX_2 = ?", hex_2)				
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 				except:
-					line = " ".join([line.rstrip(), "=== Ошибка обработки строки ===\n"])
+					line = " ".join([line.rstrip(), "=== Ошибка обработки строки, подкомманда не известна ===\n"])
 					
 				
 			if command == '3F':
@@ -388,7 +388,17 @@ def process(line, command):
 			
 			
 			if command == 'ED':
-				line = " ".join([line.strip(), "Программирование даты и времени\n"])
+				if len(line) == 23:
+					if line[19:21] == "00":
+						line = " ".join([line.strip(), "Запрос уникального идентификатора платы в ККТ\n"])
+					if line[19:21] == "01":
+						line = " ".join([line.strip(), "Хендшейк: Запрос сообщения для облака\n"])
+					if line[19:21] == "02":
+						line = " ".join([line.strip(), "Хендшейк: Отправка ответа от облака\n"])
+					if line[19:21] == "03":
+						line = " ".join([line.strip(), "Хендшейк: Запрос статуса\n"])
+				else:
+					line = " ".join([line.strip(), "Программирование даты и времени\n"])
 			
 			
 			if command == 'EE':
