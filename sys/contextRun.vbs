@@ -6,5 +6,5 @@
 '
 ' Вне применения для контекстного меню этот скрипт НЕ НУЖЕН.
 
-dieBitch = Replace(WScript.ScriptFullName&"*",WScript.ScriptName&"*","") 'pathTo
-WScript.CreateObject("Shell.Application").ShellExecute Left(dieBitch,len(dieBitch)-4)&"evo_kkm_reader.py",WScript.Arguments(0) 'removing /sys from the path
+dieBitch = Replace(WScript.ScriptFullName&"*",WScript.ScriptName&"*","") ' pathTo
+WScript.CreateObject("Shell.Application").ShellExecute Left(dieBitch,len(dieBitch)-4)&"evo_kkm_reader.py",WScript.Arguments(0),,,0
