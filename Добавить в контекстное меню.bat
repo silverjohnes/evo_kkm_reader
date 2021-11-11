@@ -1,5 +1,5 @@
 ::
-:: Включение программы в контекстное меню проводника.
+:: Р’РєР»СЋС‡РµРЅРёРµ РїСЂРѕРіСЂР°РјРјС‹ РІ РєРѕРЅС‚РµРєСЃС‚РЅРѕРµ РјРµРЅСЋ РїСЂРѕРІРѕРґРЅРёРєР°.
 ::
 
  @echo off
@@ -20,7 +20,7 @@
   if '%errorlevel%' == '0' ( goto gotPrivileges ) else ( goto getPrivileges )
 :getPrivileges
   if '%1'=='ELEV' (echo ELEV & shift /1 & goto gotPrivileges)
-  ECHO Запрос прав администратора.
+  ECHO Р—Р°РїСЂРѕСЃ РїСЂР°РІ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°.
   ECHO Set UAC = CreateObject^("Shell.Application"^) > "%vbsGetPrivileges%"
   ECHO args = "ELEV " >> "%vbsGetPrivileges%"
   ECHO For Each strArg in WScript.Arguments >> "%vbsGetPrivileges%"
@@ -41,10 +41,10 @@
  :: END OF ELEVATION PROCEDURE ::
 
 
- REG ADD "HKEY_CLASSES_ROOT\*\shell\atol_kkm_reader2" /v MUIVerb /t REG_SZ /d "Обработать логи ККТ" /f
- REG ADD "HKEY_CLASSES_ROOT\*\shell\atol_kkm_reader2" /v Position /t REG_SZ /d "Top" /f
- REG ADD "HKEY_CLASSES_ROOT\*\shell\atol_kkm_reader2" /v Icon /t REG_EXPAND_SZ /d "%~dp0sys\icon.ico" /f
- REG ADD "HKEY_CLASSES_ROOT\*\shell\atol_kkm_reader2\command" /ve /d "\"wscript\" \"%~dp0sys\context_run.vbs\" //Nologo \"%%1\"" /f
+ REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v MUIVerb /t REG_SZ /d "РћР±СЂР°Р±РѕС‚Р°С‚СЊ Р»РѕРіРё РљРљРў" /f
+ REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v Position /t REG_SZ /d "Top" /f
+ REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v Icon /t REG_EXPAND_SZ /d "%~dp0sys\icon.ico" /f
+ REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader\command" /ve /d "\"wscript\" \"%~dp0sys\context_run.vbs\" //Nologo \"%%1\"" /f
 
 
  PAUSE
