@@ -1,5 +1,5 @@
 ::
-:: ÃŽÃ·Ã¨Ã±Ã²ÃªÃ  ÃªÃ®Ã­Ã²Ã¥ÃªÃ±Ã­Ã®Ã£Ã® Ã¬Ã¥Ã­Ã¾
+:: Î÷èñòêà êîíòåêñíîãî ìåíþ
 ::
 
  @echo off
@@ -20,7 +20,7 @@
   if '%errorlevel%' == '0' ( goto gotPrivileges ) else ( goto getPrivileges )
 :getPrivileges
   if '%1'=='ELEV' (echo ELEV & shift /1 & goto gotPrivileges)
-  ECHO Ã‡Ã Ã¯Ã°Ã®Ã± Ã¯Ã°Ã Ã¢ Ã Ã¤Ã¬Ã¨Ã­Ã¨Ã±Ã²Ã°Ã Ã²Ã®Ã°Ã .
+  ECHO Çàïðîñ ïðàâ àäìèíèñòðàòîðà.
   ECHO Set UAC = CreateObject^("Shell.Application"^) > "%vbsGetPrivileges%"
   ECHO args = "ELEV " >> "%vbsGetPrivileges%"
   ECHO For Each strArg in WScript.Arguments >> "%vbsGetPrivileges%"
