@@ -42,7 +42,7 @@
 
 
  REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v MUIVerb /t REG_SZ /d "Обработать логи ККТ" /f
- REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v Position /t REG_SZ /d "Top" /f
+::REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v Position /t REG_SZ /d "Top" /f
  REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v Icon /t REG_EXPAND_SZ /d "%~dp0sys\icon.ico" /f
  REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader\command" /ve /d "\"wscript\" \"%~dp0sys\context_run.vbs\" //Nologo \"%%1\"" /f
 
