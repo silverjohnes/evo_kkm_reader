@@ -46,5 +46,7 @@
  REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v Icon /t REG_EXPAND_SZ /d "%~dp0sys\icon.ico" /f
  REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader\command" /ve /d "\"wscript\" \"%~dp0sys\context_run.vbs\" //Nologo \"%%1\"" /f
 
-
+ ECHO.
+ ECHO Настройки будут применены после перезагрузки компьютера.
+ ECHO.
  PAUSE

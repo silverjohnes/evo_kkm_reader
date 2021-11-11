@@ -44,4 +44,7 @@
  REG DELETE "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /f
 
 
+ ECHO.
+ ECHO Настройки будут применены после перезагрузки компьютера.
+ ECHO.
  PAUSE
