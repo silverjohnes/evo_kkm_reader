@@ -41,7 +41,7 @@
  :: END OF ELEVATION PROCEDURE ::
 
 
- REG DELETE "HKEY_CLASSES_ROOT\*\shell\atol_kkm_reader2" /f
+ REG DELETE "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader2" /f
 
 
  PAUSE
