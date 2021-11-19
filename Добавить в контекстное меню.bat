@@ -6,7 +6,7 @@
  CHCP 1251
  CLS
 
-:: Evaluate, see "https://stackoverflow.com/a/12264592/1016343" for description
+:: Evaluate, see "https://stackoverflow.com/a/12264592/1016343" for description.
 :init
  setlocal DisableDelayedExpansion
  set cmdInvoke=1
@@ -38,7 +38,7 @@
 :gotPrivileges
  setlocal & cd /d %~dp0
  if '%1'=='ELEV' (del "%vbsGetPrivileges%" 1>nul 2>nul  &  shift /1)
- :: END OF ELEVATION PROCEDURE ::
+ :: End of evaluation.
 
 
  REG ADD "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /v MUIVerb /t REG_SZ /d "Обработать логи ККТ" /f

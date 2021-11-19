@@ -38,7 +38,7 @@
 :gotPrivileges
  setlocal & cd /d %~dp0
  if '%1'=='ELEV' (del "%vbsGetPrivileges%" 1>nul 2>nul  &  shift /1)
- :: END OF ELEVATION PROCEDURE ::
+ :: End of evaluation.
 
 
  REG DELETE "HKEY_CLASSES_ROOT\*\shell\evo_kkm_reader" /f
