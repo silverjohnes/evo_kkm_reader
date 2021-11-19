@@ -13,7 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
 import process
 
 
-inTest = 1
+inTest = 0
 testInputFile = 'logs.zip'
 outputPrefix = 'readable_'
 supportedFileTypes = ('.txt', '.zip')
