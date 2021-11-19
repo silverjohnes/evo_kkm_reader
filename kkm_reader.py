@@ -22,11 +22,14 @@ supportedFileTypes = ('.txt', '.zip')
 
 #  Работа типов файлов.
 def checkFile(): 
+	global isZip
 	fname, fext = os.path.splitext(inputFile)
 	if fext.lower() in supportedFileTypes:
 		if zipfile.is_zipfile(inputFile):
+			isZip = 1
 			zipRoutine(fname)
 		else:
+			isZip = 0
 			fileProcess()
 
 #  Тут всё понятно
@@ -65,7 +68,7 @@ def fileProcess():
 			if line[14:16] == "> ":
 				command = line[16:18]
 			output.write(process.process(line, command)) #  То, ради чего всё затевалось.
-	if inTest == 0:
+	if inTest == 0 and isZip == 0:
 		os.remove(inputFile)
 	print(">", outputFile)
 
