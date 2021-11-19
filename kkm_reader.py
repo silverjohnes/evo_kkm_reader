@@ -13,14 +13,14 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
 import process
 
 
-inTest = 0
+inTest = 1
 testInputFile = 'logs.zip'
 outputPrefix = 'readable_'
 supportedFileTypes = ('.txt', '.zip')
 
 
 
-#  Работа типов файлов.
+#  Разбор типов файлов.
 def checkFile(): 
 	global isZip
 	fname, fext = os.path.splitext(inputFile)
@@ -32,11 +32,11 @@ def checkFile():
 			isZip = 0
 			fileProcess()
 
-#  Тут всё понятно
+#  Тут всё понятно.
 def zipRoutine(fname):
 	global inputFile
 	beforeZipDir = os.getcwd()
-	#  Очистка целепой папки для разархивирования если она есть.
+	#  Очистка целевой папки для разархивирования, если она есть.
 	for unzipFolder, insideDirs, insideFiles in os.walk(os.path.join(os.getcwd(), fname), topdown=False):
 		for file in insideFiles:
 			os.remove(os.path.join(unzipFolder, file))
@@ -53,7 +53,7 @@ def zipRoutine(fname):
 	for j in range(0, len(os.listdir())):
 		inputFile = os.listdir()[j]
 		fileProcess()
-	for files in os.listdir(): #  Очистка папки от оригиналов
+	for files in os.listdir(): #  Очистка папки от необработанных оригиналов.
 		if os.path.basename(files)[0:len(outputPrefix)] != outputPrefix:
 			os.remove(os.path.basename(files))
 	os.chdir(beforeZipDir)
@@ -91,7 +91,7 @@ if len(sys.argv) > 1: # Есть параметры запуска?
 	for i in range(1, len(sys.argv)):
 		inputFile = os.path.basename(sys.argv[i])
 		checkFile()
-elif inTest == 1: #  Фигачу тестовый файл если включен тестовый режим
+elif inTest == 1:
 	os.chdir(os.path.dirname(__file__))
 	inputFile = testInputFile
 	checkFile()
