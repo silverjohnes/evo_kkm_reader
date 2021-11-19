@@ -14,7 +14,7 @@ import process
 
 
 inTest = 0
-testInputFile = 'logs.zip'
+testInputFile = 'logs.txt'
 outputPrefix = 'readable_'
 supportedFileTypes = ('.txt', '.zip')
 
@@ -73,21 +73,10 @@ def fileProcess():
 	print(">", outputFile)
 
 
-#  Определение рабочей папки или отбивка.
+#  Основное тело.
+print("Сформированы файлы:")
 if len(sys.argv) > 1: 
 	os.chdir(os.path.dirname(sys.argv[1]))
-elif inTest == 0:
-	print("Перетяните файлы с логами из любой папки на", os.path.basename(__file__), "\n")
-	if sys.platform == 'win32':
-		os.system('pause')
-	else:
-		input("Для продолжения нажмите Enter . . .")
-	quit()
-
-
-#  Беги, глупец
-print("Сформированы файлы:")
-if len(sys.argv) > 1: # Есть параметры запуска?
 	for i in range(1, len(sys.argv)):
 		inputFile = os.path.basename(sys.argv[i])
 		checkFile()
@@ -95,6 +84,12 @@ elif inTest == 1:
 	os.chdir(os.path.dirname(__file__))
 	inputFile = testInputFile
 	checkFile()
-	
-	
+else:
+	print("Перетяните файлы с логами из любой папки на", os.path.basename(__file__), "\n")
+	if sys.platform == 'win32':
+		os.system('pause')
+	else:
+		input("Для продолжения нажмите Enter . . .")
+	quit()
+
 print()
