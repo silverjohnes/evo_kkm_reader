@@ -72,10 +72,11 @@ def fileProcess():
 			if line[14:16] == "> ":
 				command = line[16:18]
 			output.write(process.process(line, command)) #  То, ради чего всё затевалось.
-	if inTest == 0 and isZip == 0:
-		os.remove(inputFile)
-	elif autoOpen == 1 and isZip == 0:
-		os.system(f'start {outputFile}')
+	if isZip == 0:
+		if inTest == 0:
+			os.remove(inputFile)
+		if autoOpen == 1:
+			os.system(f'start {outputFile}')
 	print(">", outputFile)
 
 
