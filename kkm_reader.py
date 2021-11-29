@@ -14,6 +14,8 @@ import process
 
 
 inTest = 0
+autoOpen = 1
+autoOpenZip = 1
 testInputFile = 'logs.txt'
 outputPrefix = 'readable_'
 supportedFileTypes = ('.txt', '.zip')
@@ -50,12 +52,14 @@ def zipRoutine(fname):
 			zipFileList.filename = os.path.basename(zipFileList.filename)
 			inputZipFile.extract(zipFileList, os.path.join(os.getcwd(), fname))
 	os.chdir(os.path.join(os.getcwd(), fname))
-	for j in range(0, len(os.listdir())):
+	for j in range(len(os.listdir())):
 		inputFile = os.listdir()[j]
 		fileProcess()
 	for files in os.listdir(): #  Очистка папки от необработанных оригиналов.
 		if os.path.basename(files)[0:len(outputPrefix)] != outputPrefix:
 			os.remove(os.path.basename(files))
+	if autoOpenZip == 1:
+		os.system(f'start {os.path.realpath(os.getcwd())}')
 	os.chdir(beforeZipDir)
 	
 
@@ -70,11 +74,12 @@ def fileProcess():
 			output.write(process.process(line, command)) #  То, ради чего всё затевалось.
 	if inTest == 0 and isZip == 0:
 		os.remove(inputFile)
+	elif autoOpen == 1 and isZip == 0:
+		os.system(f'start {outputFile}')
 	print(">", outputFile)
 
 
 #  Основное тело.
-print("Сформированы файлы:")
 if len(sys.argv) > 1: 
 	os.chdir(os.path.dirname(sys.argv[1]))
 	for i in range(1, len(sys.argv)):
