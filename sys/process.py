@@ -66,20 +66,19 @@ def process(line, command):
 					
 			elif command == 'EC':
 				if line[19:21] == '0A':
-					if line[23:25] == '01':
-						line = " ".join([line.strip(), "Восстановление необнуляемой суммы, Приход\n"])
-					elif line[23:25] == '02':
-						line = " ".join([line.strip(), "Восстановление необнуляемой суммы, Возврат прихода\n"])
-					elif line[23:25] == '04':
-						line = " ".join([line.strip(), "Восстановление необнуляемой суммы Расход\n"])
-					elif line[23:25] == '05':
-						line = " ".join([line.strip(), "Восстановление необнуляемой суммы Возврат расхода\n"])
+					if line[22:24] == '28':
+						hex_3 = line[25:27],
+						try:
+							cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EC' AND HEX_2 = '0A' AND HEX_3 = ?", hex_3)				
+							line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+						except:
+							line = " ".join([line.rstrip(), errorSubCommand])
 					else:
 						line = " ".join([line.strip(), "Запись в таблицу настроек ФР"])
 				elif line[19:21] == '0B':
 					line = " ".join([line.strip(), "Чтение таблицы настроек ФР"])
 				else:
-					try:
+					try: #  Обновление ФР.
 						hex_2 = line[19:21],
 						cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EC' AND HEX_2 = ?", hex_2)
 						line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
