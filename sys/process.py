@@ -13,8 +13,8 @@ reaDb.close()
 cursor = db.cursor()
 
 
-errorCommand = "+== Команда не известна или ошибка обработки строки +==\n"
-errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки =+=\n"
+errorCommand = "+== Команда не известна или ошибка обработки строки +=="
+errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки =+="
 
 
 #
@@ -35,7 +35,7 @@ def process(line, command):
 					cursor.execute("SELECT DESC FROM REGIME WHERE HEX = ?", hex_2)				
 					line = " ".join([line.rstrip(), "Вход в режим", cursor.fetchone()[0], "\n"])
 				except:
-					line = " ".join([line.rstrip(), errorSubCommand])
+					line = " ".join([line.rstrip(), errorSubCommand, "\n"])
 
 			
 			elif command == 'A4':
@@ -44,7 +44,7 @@ def process(line, command):
 					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'A4' AND HEX_2 = ?", hex_2)					
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 				except:
-					line = " ".join([line.rstrip(), errorSubCommand])
+					line = " ".join([line.rstrip(), errorSubCommand, "\n"])
 
 			
 			elif command == 'EF':
@@ -53,7 +53,7 @@ def process(line, command):
 					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EF' AND HEX_2 = ?", hex_2)				
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 				except:
-					line = " ".join([line.rstrip(), errorSubCommand])
+					line = " ".join([line.rstrip(), errorSubCommand, "\n"])
 
 					
 			elif command == 'CE':
@@ -72,18 +72,18 @@ def process(line, command):
 							cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EC' AND HEX_2 = '0A' AND HEX_3 = ?", hex_3)				
 							line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 						except:
-							line = " ".join([line.rstrip(), errorSubCommand])
+							line = " ".join([line.rstrip(), errorSubCommand, "\n"])
 					else:
-						line = " ".join([line.strip(), "Запись в таблицу настроек ФР"])
+						line = " ".join([line.strip(), "Запись в таблицу настроек ФР\n"])
 				elif line[19:21] == '0B':
-					line = " ".join([line.strip(), "Чтение таблицы настроек ФР"])
+					line = " ".join([line.strip(), "Чтение таблицы настроек ФР\n"])
 				else:
 					try: #  Обновление ФР.
 						hex_2 = line[19:21],
 						cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'EC' AND HEX_2 = ?", hex_2)
 						line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 					except:
-						line = " ".join([line.rstrip(), errorCommand])
+						line = " ".join([line.rstrip(), errorCommand, "\n"])
 
 			
 			elif command == 'ED':
@@ -93,7 +93,7 @@ def process(line, command):
 						cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = 'ED' AND HEX_2 = ?", hex_2)
 						line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 					except:
-						line = " ".join([line.rstrip(), errorCommand])
+						line = " ".join([line.rstrip(), errorCommand, "\n"])
 				else:
 					line = " ".join([line.strip(), "Программирование даты и времени\n"])
 
@@ -104,7 +104,7 @@ def process(line, command):
 					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = ?", (command,))
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 				except:
-					line = " ".join([line.rstrip(), errorCommand])
+					line = " ".join([line.rstrip(), errorCommand, "\n"])
 					
 
 			
