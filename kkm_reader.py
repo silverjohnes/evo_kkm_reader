@@ -13,7 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
 import process
 
 
-inTest = 0
+inTest = 1
 autoOpen = 1
 autoOpenZip = 1
 testInputFile = 'logs.txt'
@@ -59,7 +59,11 @@ def zipRoutine(fname):
 		if os.path.basename(files)[0:len(outputPrefix)] != outputPrefix:
 			os.remove(os.path.basename(files))
 	if autoOpenZip == 1:
-		os.system(f'start {os.path.realpath(os.getcwd())}')
+		if sys.platform == "win32":
+			os.startfile(os.path.realpath(os.getcwd()))
+		else:
+			opener = "open" if sys.platform == "darwin" else "xdg-open"
+			subprocess.call([opener, os.path.realpath(os.getcwd())])
 	os.chdir(beforeZipDir)
 	
 
@@ -72,12 +76,17 @@ def fileProcess():
 			if line[14:16] == "> ":
 				command = line[16:18]
 			output.write(process.process(line, command)) #  То, ради чего всё затевалось.
+	print(">", outputFile)
 	if isZip == 0:
 		if inTest == 0:
 			os.remove(inputFile)
 		if autoOpen == 1:
-			os.system(f'start {outputFile}')
-	print(">", outputFile)
+			if sys.platform == "win32":
+				os.startfile(os.path.realpath(outputFile))
+			else:
+				opener = "open" if sys.platform == "darwin" else "xdg-open"
+				subprocess.call([opener, os.path.realpath(os.getcwd())])
+				os.system(f'start {outputFile}')
 
 
 #  Основное тело.
