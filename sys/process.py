@@ -98,7 +98,21 @@ def process(line, command):
 					line = " ".join([line.strip(), "Программирование даты и времени\n"])
 
 
+			elif command == '91':
+				try:
+					hex_2 = line[19:21],
+					cursor.execute("SELECT DESC FROM REGISTER WHERE HEX_2 = ?", hex_2)
+					line = " ".join([line.rstrip(), "Считать регистр", cursor.fetchone()[0], "\n"])
+				except:
+					line = " ".join([line.rstrip(), "Считать регистр", errorSubCommand, "\n"])
+
+
+
+
+
+			#
 			#  Обработка всех остальных комманд, которые не были перечислены выше.
+			#
 			else:
 				try:
 					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = ?", (command,))
@@ -112,23 +126,23 @@ def process(line, command):
 		# ОБРАБОТЧИКИ ОТВЕТОВ:
 		if line[14:16] == '< ':
 		#
-		
+			answer = line[16:18]
+			
 			# 1. Ответ <55h> <Код ошибки (1)>
-			if line[16:18] == '55' and len(line) == 26:
+			if answer == '55' and len(line) == 26:
 				#if command in ("""XX, XX"""):  # Перечень команд, к которым может относиться этот ответ
 				if command not in ("""45"""): # Перечень, к которым ответ не применим
-					line = line.rstrip() + " Ответ:"
+					line = " ".join([line.rstrip(), "Ответ:"])
 					var = line[19:21],
 					cursor.execute("SELECT DESC FROM ERROR WHERE HEX = ?", var)
-					line = line.rstrip() + " " + cursor.fetchone()[0] + "\n"
+					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 				elif command == "45": # Конкретно к какой комманде применим
-					line = line.rstrip() + " В режиме:"
+					line = " ".join([line.rstrip(), "В режиме:"])
 					var = line[19:21],
 					cursor.execute("SELECT DESC FROM STATUS_CODE WHERE BIN = ?", var)
-					line = line.rstrip() + " " + cursor.fetchone()[0] + "\n"
+					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 			
-			#
-	
+			
 	
 	
 		#
