@@ -59,11 +59,7 @@ def zipRoutine(fname):
 		if os.path.basename(files)[0:len(outputPrefix)] != outputPrefix:
 			os.remove(os.path.basename(files))
 	if autoOpenZip == 1:
-		if sys.platform == "win32":
-			os.startfile(os.path.realpath(os.getcwd()))
-		else:
-			opener = "open" if sys.platform == "darwin" else "xdg-open"
-			subprocess.call([opener, os.path.realpath(os.getcwd())])
+		openFile(os.getcwd())
 	os.chdir(beforeZipDir)
 	
 
@@ -81,11 +77,16 @@ def fileProcess():
 		if inTest == 0:
 			os.remove(inputFile)
 		if autoOpen == 1:
-			if sys.platform == "win32":
-				os.startfile(os.path.realpath(outputFile))
-			else:
-				opener = "open" if sys.platform == "darwin" else "xdg-open"
-				subprocess.call([opener, os.path.realpath(outputFile)])
+			openFile(outputFile)
+
+
+#  Открывашка файлов.
+def openFile(fileOrPathToOpen):
+	if sys.platform == "win32":
+		os.startfile(os.path.realpath(fileOrPathToOpen))
+	else:
+		opener = "open" if sys.platform == "darwin" else "xdg-open"
+		subprocess.call([opener, os.path.realpath(fileOrPathToOpen)])
 
 
 #  Основное тело.
