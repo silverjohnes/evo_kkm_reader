@@ -85,8 +85,7 @@ def fileProcess():
 				os.startfile(os.path.realpath(outputFile))
 			else:
 				opener = "open" if sys.platform == "darwin" else "xdg-open"
-				subprocess.call([opener, os.path.realpath(os.getcwd())])
-				os.system(f'start {outputFile}')
+				subprocess.call([opener, os.path.realpath(outputFile)])
 
 
 #  Основное тело.
