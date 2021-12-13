@@ -13,7 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
 import process
 
 
-inTest = 1
+inTest = 0
 autoOpen = 1
 autoOpenZip = 1
 testInputFile = 'logs.txt'
@@ -79,7 +79,6 @@ def fileProcess():
 		if autoOpen == 1:
 			openFile(outputFile)
 
-
 #  Открывашка файлов.
 def openFile(fileOrPathToOpen):
 	if sys.platform == "win32":
@@ -87,6 +86,7 @@ def openFile(fileOrPathToOpen):
 	else:
 		opener = "open" if sys.platform == "darwin" else "xdg-open"
 		subprocess.call([opener, os.path.realpath(fileOrPathToOpen)])
+
 
 
 #  Основное тело.
