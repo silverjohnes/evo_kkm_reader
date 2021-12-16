@@ -13,8 +13,9 @@ reaDb.close()
 cursor = db.cursor()
 
 
-errorCommand = "+== Команда не известна или ошибка обработки строки +=="
-errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки =+="
+errorCommand = "+== Команда не известна или ошибка обработки строки (сообщите разработчику)"
+errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки (сообщите разработчику)"
+errorTag = "(описание отсутствует) ==+"
 
 
 #
@@ -105,10 +106,28 @@ def process(line, command):
 					line = " ".join([line.rstrip(), "Считать регистр", cursor.fetchone()[0], "\n"])
 				except:
 					line = " ".join([line.rstrip(), "Считать регистр", errorSubCommand, "\n"])
+				
+				
+			elif command == 'E8':
+				try:	
+					hex_btswpt = line[28:33],
+					cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
+					tagAndName = cursor.fetchone()
+					line = "".join([line.rstrip(), " Запись реквизита ", tagAndName[0], " \"", tagAndName[1], "\"", "\n"])
+				except:
+					tagSwypedBack = str(int("".join([line[31:33], line[28:30]]), 16))
+					line = " ".join([line.rstrip(), "Запись реквизита", tagSwypedBack, errorTag, "\n"])
 
 
-
-
+			elif command == 'E9':
+				try:	
+					hex_btswpt = line[19:24],
+					cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
+					tagAndName = cursor.fetchone()
+					line = "".join([line.rstrip(), " Чтение реквизита ", tagAndName[0], " \"", tagAndName[1], "\"", "\n"])
+				except:
+					tagSwypedBack = str(int("".join([line[22:24], line[19:21]]), 16))
+					line = " ".join([line.rstrip(), "Чтение реквизита", tagSwypedBack, errorTag, "\n"])
 
 			#
 			#  Обработка всех остальных комманд, которые не были перечислены выше.
