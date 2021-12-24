@@ -109,8 +109,8 @@ def process(line, command):
 				
 				
 			elif command == 'E8':
-				tagLength = int(line[25:27])
-				if tagLength == 0:			
+				tagBlockNumber = int(line[25:27])
+				if tagBlockNumber == 0:			
 					try:	
 						hex_btswpt = line[28:33],
 						cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
@@ -120,7 +120,7 @@ def process(line, command):
 						tagSwypedBack = str(int("".join([line[31:33], line[28:30]]), 16))
 						line = " ".join([line.rstrip(), "Запись реквизита", tagSwypedBack, errorTag, "\n"])
 				else:
-					line = " ".join([line.rstrip(), "продолжение записи реквизита, блок", str(tagLength + 1), "\n"])
+					line = " ".join([line.rstrip(), "продолжение записи реквизита, блок", str(tagBlockNumber + 1), "\n"])
 
 
 			elif command == 'E9':
