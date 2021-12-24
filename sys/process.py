@@ -5,18 +5,18 @@ import sys
 import sqlite3
 from dict import dict
 
+
+errorCommand = "+== Команда не известна или ошибка обработки строки (сообщите разработчику)"
+errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки (сообщите разработчику)"
+errorTag = "(описание отсутствует) ==+"
+
+
 # Подключение БД
 db = sqlite3.connect(':memory:')
 reaDb = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'db.db'))
 reaDb.backup(db)
 reaDb.close()
 cursor = db.cursor()
-
-
-errorCommand = "+== Команда не известна или ошибка обработки строки (сообщите разработчику)"
-errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки (сообщите разработчику)"
-errorTag = "(описание отсутствует) ==+"
-
 
 #
 # Обработчик строк:
@@ -109,14 +109,18 @@ def process(line, command):
 				
 				
 			elif command == 'E8':
-				try:	
-					hex_btswpt = line[28:33],
-					cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
-					tagAndName = cursor.fetchone()
-					line = "".join([line.rstrip(), " Запись реквизита ", tagAndName[0], " \"", tagAndName[1], "\"", "\n"])
-				except:
-					tagSwypedBack = str(int("".join([line[31:33], line[28:30]]), 16))
-					line = " ".join([line.rstrip(), "Запись реквизита", tagSwypedBack, errorTag, "\n"])
+				tagLength = int(line[25:27])
+				if tagLength == 0:			
+					try:	
+						hex_btswpt = line[28:33],
+						cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
+						tagAndName = cursor.fetchone()
+						line = "".join([line.rstrip(), " Запись реквизита ", tagAndName[0], " \"", tagAndName[1], "\"", "\n"])
+					except:
+						tagSwypedBack = str(int("".join([line[31:33], line[28:30]]), 16))
+						line = " ".join([line.rstrip(), "Запись реквизита", tagSwypedBack, errorTag, "\n"])
+				else:
+					line = " ".join([line.rstrip(), "продолжение записи реквизита, блок", str(tagLength + 1), "\n"])
 
 
 			elif command == 'E9':
@@ -128,6 +132,7 @@ def process(line, command):
 				except:
 					tagSwypedBack = str(int("".join([line[22:24], line[19:21]]), 16))
 					line = " ".join([line.rstrip(), "Чтение реквизита", tagSwypedBack, errorTag, "\n"])
+
 
 			#
 			#  Обработка всех остальных комманд, которые не были перечислены выше.
