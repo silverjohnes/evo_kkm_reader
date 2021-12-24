@@ -38,15 +38,15 @@ def checkFile():
 def zipRoutine(fname):
 	global inputFile
 	beforeZipDir = os.getcwd()
-	#  Очистка целевой папки для разархивирования, если она есть.
+	#  Очистка целевой папки для разархивирования, если она есть:
 	for unzipFolder, insideDirs, insideFiles in os.walk(os.path.join(os.getcwd(), fname), topdown=False):
 		for file in insideFiles:
 			os.remove(os.path.join(unzipFolder, file))
 		for file in insideDirs:
 			os.rmdir(os.path.join(unzipFolder, file))
-	#
+	#  Исключение папок из распаковки:
 	with zipfile.ZipFile(inputFile, 'r') as inputZipFile:
-		for zipFileList in inputZipFile.infolist(): #  Исключение папок из распаковки.
+		for zipFileList in inputZipFile.infolist(): 
 			if zipFileList.filename[-1] == '/':
 				continue
 			zipFileList.filename = os.path.basename(zipFileList.filename)
@@ -55,7 +55,8 @@ def zipRoutine(fname):
 	for j in range(len(os.listdir())):
 		inputFile = os.listdir()[j]
 		fileProcess()
-	for files in os.listdir(): #  Очистка папки от необработанных оригиналов.
+	#  Очистка папки от необработанных оригиналов:
+	for files in os.listdir(): 
 		if os.path.basename(files)[0:len(outputPrefix)] != outputPrefix:
 			os.remove(os.path.basename(files))
 	if autoOpenZip == 1:
@@ -79,14 +80,14 @@ def fileProcess():
 		if autoOpen == 1:
 			openFile(outputFile)
 
-#  Открывашка файлов.
+
+#  ОС-независимая открывашка файлов после обработки.
 def openFile(fileOrPathToOpen):
 	if sys.platform == "win32":
 		os.startfile(os.path.realpath(fileOrPathToOpen))
 	else:
 		opener = "open" if sys.platform == "darwin" else "xdg-open"
 		subprocess.call([opener, os.path.realpath(fileOrPathToOpen)])
-
 
 
 #  Основное тело.
