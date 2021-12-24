@@ -109,7 +109,7 @@ def process(line, command):
 				
 				
 			elif command == 'E8':
-				valueBlockNumber = int(line[25:27])
+				valueBlockNumber = int(line[25:27], 16)
 				if valueBlockNumber == 0:			
 					try:	
 						hex_btswpt = line[28:33],
