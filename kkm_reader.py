@@ -75,8 +75,8 @@ def fileProcess():
 			output.write(process.process(line, command)) #  То, ради чего всё затевалось.
 	print(">", outputFile)
 	if isZip == 0:
-		if inTest == 0:
-			os.remove(inputFile)
+		#if inTest == 0:
+		#	os.remove(inputFile)
 		if autoOpen == 1:
 			openFile(outputFile)
 
