@@ -6,9 +6,9 @@ import sqlite3
 from dict import dict
 
 
-errorCommand = "+== Команда не известна или ошибка обработки строки (сообщите разработчику)"
-errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки (сообщите разработчику)"
-errorTag = "(описание отсутствует) ==+"
+errorCommand = "+== Команда не известна или ошибка обработки строки. Проверьте обновление программы"
+errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки. Проверьте обновление программы"
+errorTag = "(описание отсутствует, проверьте обновление программы) ==+"
 
 
 # Подключение БД
@@ -75,9 +75,9 @@ def process(line, command):
 						except:
 							line = " ".join([line.rstrip(), errorSubCommand, "\n"])
 					else:
-						line = " ".join([line.strip(), "Запись в таблицу настроек ФР\n"])
+						line = " ".join([line.strip(), "Запись в таблицу настроек ФР \n"])
 				elif line[19:21] == '0B':
-					line = " ".join([line.strip(), "Чтение таблицы настроек ФР\n"])
+					line = " ".join([line.strip(), "Чтение таблицы настроек ФР \n"])
 				else:
 					try: #  Обновление ФР.
 						hex_2 = line[19:21],
@@ -96,7 +96,7 @@ def process(line, command):
 					except:
 						line = " ".join([line.rstrip(), errorCommand, "\n"])
 				else:
-					line = " ".join([line.strip(), "Программирование даты и времени\n"])
+					line = " ".join([line.strip(), "Программирование даты и времени \n"])
 
 
 			elif command == '91':
@@ -115,7 +115,7 @@ def process(line, command):
 						hex_btswpt = line[28:33],
 						cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
 						tagAndName = cursor.fetchone()
-						line = "".join([line.rstrip(), " Запись реквизита ", tagAndName[0], " \"", tagAndName[1], "\"", "\n"])
+						line = "".join([line.rstrip(), " Запись реквизита ", tagAndName[0], " \"", tagAndName[1], "\"", " \n"])
 					except:
 						tagSwypedBack = str(int("".join([line[31:33], line[28:30]]), 16))
 						line = " ".join([line.rstrip(), "Запись реквизита", tagSwypedBack, errorTag, "\n"])
@@ -128,7 +128,7 @@ def process(line, command):
 					hex_btswpt = line[19:24],
 					cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
 					tagAndName = cursor.fetchone()
-					line = "".join([line.rstrip(), " Чтение реквизита ", tagAndName[0], " \"", tagAndName[1], "\"", "\n"])
+					line = "".join([line.rstrip(), " Чтение реквизита ", tagAndName[0], " \"", tagAndName[1], "\"", " \n"])
 				except:
 					tagSwypedBack = str(int("".join([line[22:24], line[19:21]]), 16))
 					line = " ".join([line.rstrip(), "Чтение реквизита", tagSwypedBack, errorTag, "\n"])
