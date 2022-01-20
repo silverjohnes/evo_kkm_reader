@@ -3,12 +3,11 @@
 import os
 import sys
 import sqlite3
-from dict import dict
 
 
-errorCommand = "+== Команда не известна или ошибка обработки строки. Проверьте обновление программы"
-errorSubCommand = "=+= Подкомманда не известна или ошибка обработки строки. Проверьте обновление программы"
-errorTag = "(описание отсутствует, проверьте обновление программы) ==+"
+errorCommand = "+=== Команда не известна или ошибка обработки строки. Проверьте обновление программы"
+errorSubCommand = "=+== Подкомманда не известна или ошибка обработки строки. Проверьте обновление программы"
+errorTag = "(описание отсутствует, проверьте обновление программы) ==+="
 
 
 # Подключение БД
@@ -100,12 +99,15 @@ def process(line, command):
 
 
 			elif command == '91':
-				try:
-					hex_2 = line[19:21],
-					cursor.execute("SELECT DESC FROM REGISTER WHERE HEX_2 = ?", hex_2)
-					line = " ".join([line.rstrip(), "Считать регистр", cursor.fetchone()[0], "\n"])
-				except:
-					line = " ".join([line.rstrip(), "Считать регистр", errorSubCommand, "\n"])
+				line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), "\n"])
+				
+				# Расшифровка легенды запроса из Протокола. Не соответствует Эвотору и загрязняет результат визуально.
+				# try:
+					# hex_2 = line[19:21],
+					# cursor.execute("SELECT DESC FROM REGISTER WHERE HEX_2 = ?", hex_2)
+					# line = " ".join([line.rstrip(), "Считать регистр", cursor.fetchone()[0], "\n"])
+				# except:
+					# line = " ".join([line.rstrip(), "Считать регистр", errorSubCommand, "\n"])
 				
 				
 			elif command == 'E8':
