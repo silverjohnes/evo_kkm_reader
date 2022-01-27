@@ -20,7 +20,7 @@ cursor = db.cursor()
 #
 # Обработчик строк:
 #
-def process(line, command):
+def process(line, command, subCommand):
 	if len(line) > 14:  # проверка для обработки пустых строк
 	
 		# 
@@ -105,9 +105,9 @@ def process(line, command):
 				# try:
 					# hex_2 = line[19:21],
 					# cursor.execute("SELECT DESC FROM REGISTER WHERE HEX_2 = ?", hex_2)
-					# line = " ".join([line.rstrip(), "Считать регистр", cursor.fetchone()[0], "\n"])
+					# line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), cursor.fetchone()[0], "\n"])
 				# except:
-					# line = " ".join([line.rstrip(), "Считать регистр", errorSubCommand, "\n"])
+					# line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), errorSubCommand, "\n"])
 				
 				
 			elif command == 'E8':
@@ -153,9 +153,29 @@ def process(line, command):
 		if line[14:16] == '< ':
 		#
 			answer = line[16:18]
-			
-			# 1. Ответ <55h> <Код ошибки (1)>
-			if answer == '55' and len(line) == 26:
+
+			# Костыль по регистру 55
+			if command == '91':
+				if subCommand == '37':
+					if line[25:27] == 'EC':
+						try:
+							error_55 = line[28:30],
+							cursor.execute("SELECT DESC FROM REGISTER_55 WHERE ANSWER = ?", error_55)
+							line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+							if line[28:30] == '04':
+								try:
+									fw_err = line[31:33],
+									cursor.execute("SELECT DESC FROM REGISTER_55_FW_ERR WHERE ERR = ?", fw_err)
+									line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
+								except:
+									line = " ".join([line.rstrip(), "Не удалось определить: передайте автору программы, что нужно исправить чтение бинарной маски ===+", "\n"])
+						except:
+							line = " ".join([line.rstrip(), "Неизвестная ошибка обновления, проверьте обновление программы ===+ \n"])
+
+
+
+			# <55h> <Код ошибки (1)>
+			elif answer == '55' and len(line) == 26:  # <-- только для ответов длиной 26 !
 				#if command in ("""XX, XX"""):  # Перечень команд, к которым может относиться этот ответ
 				if command not in ("""45"""): # Перечень, к которым ответ не применим
 					line = " ".join([line.rstrip(), "Ответ:"])
@@ -167,13 +187,12 @@ def process(line, command):
 					var = line[19:21],
 					cursor.execute("SELECT DESC FROM STATUS_CODE WHERE BIN = ?", var)
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
-			
-			
+		
+						
 	
 	
-		#
+
 		# ЗАКОНЧИЛИСЬ ОБРАБОТЧИКИ СТРОК
-		#	
 		
 	return line
 #
