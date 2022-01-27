@@ -16,8 +16,8 @@ import process
 inTest = 0
 autoOpen = 1
 autoOpenZip = 1
-testInputFile = 'logs.txt'
 outputPrefix = 'readable_'
+testInputFile = 'logs.txt'
 supportedFileTypes = ('.txt', '.zip')
 
 
@@ -68,11 +68,16 @@ def zipRoutine(fname):
 def fileProcess():
 	outputFile = outputPrefix + inputFile
 	command = "00" #  Управляющая команда, на которую обрабатывается ответ.  
+	subCommand = "00"
 	with open(inputFile, 'r', encoding='utf-8') as input, open(outputFile, 'w', encoding='utf-8') as output:
 		for line in input:
 			if line[14:16] == "> ":
 				command = line[16:18]
-			output.write(process.process(line, command)) #  То, ради чего всё затевалось.
+				try:
+					subCommand = line[19:21]
+				except:
+					subCommand = "00"
+			output.write(process.process(line, command, subCommand)) #  То, ради чего всё затевалось.
 	print(">", outputFile)
 	if isZip == 0:
 		#if inTest == 0:
