@@ -203,6 +203,15 @@ def process(line, command, subCommand):
 		# ЗАКОНЧИЛИСЬ ОБРАБОТЧИКИ СТРОК
 		
 	return line
+	
+#  Удаление устаревшего файла 2022:
+os.chdir(os.path.dirname(__file__))
+print(os.getcwd())
+try:
+	os.remove('dict.py')
+except:
+	pass
+
 #
 # FIN
 #
