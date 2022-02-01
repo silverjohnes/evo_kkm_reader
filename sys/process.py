@@ -204,14 +204,15 @@ def process(line, command, subCommand):
 		
 	return line
 	
-#  Удаление устаревшего файла 2022:
-os.chdir(os.path.dirname(__file__))
-print(os.getcwd())
-try:
-	os.remove('dict.py')
-except:
-	pass
 
 #
 # FIN
 #
+
+
+#  ... Удалить устаревший файл
+os.chdir(os.path.dirname(__file__))
+try:
+	os.remove('dict.py')
+except:
+	pass
