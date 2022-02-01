@@ -101,6 +101,14 @@ def process(line, command, subCommand):
 			elif command == '91':
 				line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), "\n"])
 				
+			elif command == '82':
+					try:
+						hex_3 = line[23],
+						cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = '82' AND HEX_3 = ?", hex_3)
+						line = " ".join([line.rstrip(), "Демонстрационная печать:", cursor.fetchone()[0], "\n"])
+					except:
+						line = " ".join([line.rstrip(), "Демонстрационная печать:", errorSubCommand, "\n"])
+				
 				# Расшифровка легенды запроса из Протокола. Не соответствует Эвотору и загрязняет результат визуально.
 				# try:
 					# hex_2 = line[19:21],
@@ -170,11 +178,11 @@ def process(line, command, subCommand):
 								except:
 									line = " ".join([line.rstrip(), "Не удалось определить: передайте автору программы, что нужно исправить чтение бинарной маски ===+", "\n"])
 						except:
-							line = " ".join([line.rstrip(), "Неизвестная ошибка обновления, проверьте обновление программы ===+ \n"])
+							line = " ".join([line.rstrip(), "Неизвестная ошибка обновления (проверьте обновление программы) ===+ \n"])
 
 
 
-			# <55h> <Код ошибки (1)>
+			# <55h> <Код ошибки (2)>
 			elif answer == '55' and len(line) == 26:  # <-- только для ответов длиной 26 !
 				#if command in ("""XX, XX"""):  # Перечень команд, к которым может относиться этот ответ
 				if command not in ("""45"""): # Перечень, к которым ответ не применим
