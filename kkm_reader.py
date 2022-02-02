@@ -67,17 +67,14 @@ def zipRoutine(fname):
 #  Обработчик файлов.
 def fileProcess():
 	outputFile = outputPrefix + inputFile
-	command = "00" #  Управляющая команда, на которую обрабатывается ответ.  
-	subCommand = "00"
+	command = "00"
+	wholeCommandLine = ""
 	with open(inputFile, 'r', encoding='utf-8') as input, open(outputFile, 'w', encoding='utf-8') as output:
 		for line in input:
 			if line[14:16] == "> ":
 				command = line[16:18]
-				try:
-					subCommand = line[19:21]
-				except:
-					subCommand = "00"
-			output.write(process.process(line, command, subCommand)) #  То, ради чего всё затевалось.
+				wholeCommandLine = line
+			output.write(process.process(line, command, wholeCommandLine)) #  То, ради чего всё затевалось.
 	print(">", outputFile)
 	if isZip == 0:
 		#if inTest == 0:
