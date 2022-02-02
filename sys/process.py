@@ -123,8 +123,8 @@ def process(line, command, wholeCommandLine):
 				global valueBlockNumberW
 				valueBlockNumberW = int(line[25:27], 16)
 				if valueBlockNumberW == 0:
-					printString = line[40:].rstrip()
-					decode(printString, "outer")
+					textString = line[40:].rstrip()
+					decode(textString)
 					try:	
 						hex_btswpt = line[28:33],
 						cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
@@ -134,7 +134,7 @@ def process(line, command, wholeCommandLine):
 						tagSwypedBack = str(int("".join([line[31:33], line[28:30]]), 16))
 						line = " ".join([line.rstrip(), "Запись реквизита", tagSwypedBack, errorTag, "\n"])
 				else:
-					printString = line[34:].rstrip()
+					textString = line[34:].rstrip()
 					line = " ".join([line.rstrip(), "продолжение записи реквизита, блок", str(valueBlockNumberW + 1), ":", decodedLine, "\n"])
 
 
@@ -187,10 +187,10 @@ def process(line, command, wholeCommandLine):
 
 			elif command == "E9":
 				if int(wholeCommandLine[25:27], 16) == 0:  # Здесь проверяется номер блока.
-					printString = line[37:].rstrip()
+					textString = line[37:].rstrip()
 				else:
-					printString = line[25:].rstrip()
-				decode(printString, "outer")		
+					textString = line[25:].rstrip()
+				decode(textString)		
 				line = "".join([line.rstrip(), " \"", decodedLine, "\" \n"])
 
 			# <55h> <Код ошибки (2)>
@@ -208,8 +208,8 @@ def process(line, command, wholeCommandLine):
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 				#  Расшифровка печати (не требуется, потому что в логах и так отображается в явном виде).
 				# if command == "87": # Конкретно к какой комманде применим
-					# printString = printString[52:].rstrip()
-					# decode(printString, "outer")
+					# textString = textString[52:].rstrip()
+					# decode(textString, "outer")
 					# line = "".join([line.rstrip(), ", текст: ", decodedLine, " \n"])
 					
 		
@@ -218,17 +218,17 @@ def process(line, command, wholeCommandLine):
 
 
 #  Раскодировка текста.
-def decode(printString, type):
+def decode(textString, *type):  #  (внешняя кодировка по-умолчанию, для использования внутренней кодировки передать type='inner')
 	global decodedLine
 	decodedLine = ''
 	if type == 'inner':
-		for char in range(0, len(printString), 3):
-			cp_hex = printString[char:char+2],
+		for char in range(0, len(textString), 3):
+			cp_hex = textString[char:char+2],
 			cursor.execute("SELECT CHAR_INNER FROM CODEPAGE WHERE HEX = ?", cp_hex)
 			decodedLine = "".join([decodedLine, cursor.fetchone()[0]])
 	else:
-		for char in range(0, len(printString), 3):
-			cp_hex = printString[char:char+2],
+		for char in range(0, len(textString), 3):
+			cp_hex = textString[char:char+2],
 			cursor.execute("SELECT CHAR_OUTER FROM CODEPAGE WHERE HEX = ?", cp_hex)
 			decodedLine = "".join([decodedLine, cursor.fetchone()[0]])
 	return decodedLine
