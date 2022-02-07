@@ -21,7 +21,7 @@ cursor = db.cursor()
 
 
 # Обработка строк.
-def process(line, command, wholeCommandLine):
+def process(line, wholeCommandLine, command):
 	if len(line) > 14:  # проверка для обработки пустых строк
 	
 		# 
@@ -55,6 +55,15 @@ def process(line, command, wholeCommandLine):
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 				except:
 					line = " ".join([line.rstrip(), errorSubCommand, "\n"])
+			
+			
+			elif command == '67':
+				hex_2 = line[19:21],
+				try:
+					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = '67' AND HEX_2 = ?", hex_2)				
+					line = " ".join([line.rstrip(), "Начало снятия отчета без гашения:", cursor.fetchone()[0], "\n"])
+				except:
+					line = " ".join([line.rstrip(), "Начало снятия отчета без гашения:", errorSubCommand, "\n"])			
 
 					
 			elif command == 'CE':
@@ -99,24 +108,28 @@ def process(line, command, wholeCommandLine):
 					line = " ".join([line.strip(), "Программирование даты и времени \n"])
 
 
-			elif command == '91':
-				line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), "\n"])
 				
 			elif command == '82':
-					try:
-						hex_3 = line[23],
-						cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = '82' AND HEX_3 = ?", hex_3)
-						line = " ".join([line.rstrip(), "Демонстрационная печать:", cursor.fetchone()[0], "\n"])
-					except:
-						line = " ".join([line.rstrip(), "Демонстрационная печать:", errorSubCommand, "\n"])
+				try:
+					hex_3 = line[23],
+					cursor.execute("SELECT DESC FROM COMMAND WHERE HEX = '82' AND HEX_3 = ?", hex_3)
+					line = " ".join([line.rstrip(), "Демонстрационная печать:", cursor.fetchone()[0], "\n"])
+				except:
+					line = " ".join([line.rstrip(), "Демонстрационная печать:", errorSubCommand, "\n"])
 				
-				# Расшифровка легенды запроса из Протокола. Не соответствует Эвотору по длинам аргументов и загрязняет результат визуально.
-				# try:
-					# hex_2 = line[19:21],
-					# cursor.execute("SELECT DESC FROM REGISTER WHERE HEX_2 = ?", hex_2)
-					# line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), cursor.fetchone()[0], "\n"])
-				# except:
-					# line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), errorSubCommand, "\n"])
+			#  Расшифровка легенды запроса из Протокола. Длины параметров могут не соответствовать Эвотору (на Эво могут быть в два раза длиннее).
+			elif command == '91':
+				try:
+					hex_2 = line[19:21],
+					cursor.execute("SELECT DESC FROM REGISTER WHERE HEX_2 = ?", hex_2)
+					line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), cursor.fetchone()[0], "\n"])
+				except:
+					line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), errorSubCommand, "\n"])
+			
+			#  То же самое без легенды
+			#elif command == '91':
+			#	line = " ".join([line.rstrip(), "Считать регистр", str(int(line[19:21], 16)), "\n"])
+
 				
 				
 			elif command == 'E8':
