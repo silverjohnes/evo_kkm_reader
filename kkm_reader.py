@@ -13,7 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
 import process
 
 
-inTest = 1
+inTest = 0
 autoOpen = 1
 autoOpenZip = 1
 slugClearance = 1  #  Очистка строк обмена (>>>> и <<<<)
