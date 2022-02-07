@@ -13,9 +13,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
 import process
 
 
-inTest = 0
+inTest = 1
 autoOpen = 1
 autoOpenZip = 1
+slugClearance = 1  #  Очистка строк обмена (>>>> и <<<<)
 outputPrefix = 'readable_'
 testInputFile = 'logs.txt'
 supportedFileTypes = ('.txt', '.zip')
@@ -74,7 +75,10 @@ def fileProcess():
 			if line[14:16] == "> ":
 				command = line[16:18]
 				wholeCommandLine = line
-			output.write(process.process(line, command, wholeCommandLine)) #  То, ради чего всё затевалось.
+			if slugClearance == 1: 
+				if line[15:16] == ">" or line[15:16] == "<":
+					continue				
+			output.write(process.process(line, wholeCommandLine, command)) #  То, ради чего всё затевалось.
 	print(">", outputFile)
 	if isZip == 0:
 		#if inTest == 0:
