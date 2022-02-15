@@ -136,8 +136,7 @@ def process(line, wholeCommandLine, command):
 				global valueBlockNumberW
 				valueBlockNumberW = int(line[25:27], 16)
 				if valueBlockNumberW == 0:
-					textString = line[40:].rstrip()
-					decode(textString)
+					decode(line[40:].rstrip())
 					try:	
 						hex_btswpt = line[28:33],
 						cursor.execute("SELECT TAG, NAME FROM TAGS WHERE HEX_BYTESWAPPED = ?", hex_btswpt)
@@ -147,7 +146,7 @@ def process(line, wholeCommandLine, command):
 						tagSwypedBack = str(int("".join([line[31:33], line[28:30]]), 16))
 						line = " ".join([line.rstrip(), "Запись реквизита", tagSwypedBack, errorTag, "\n"])
 				else:
-					textString = line[34:].rstrip()
+					decode(line[34:].rstrip())
 					line = " ".join([line.rstrip(), "продолжение записи реквизита, блок", str(valueBlockNumberW + 1), ":", decodedLine, "\n"])
 
 
@@ -160,6 +159,10 @@ def process(line, wholeCommandLine, command):
 				except:
 					tagSwypedBack = str(int("".join([line[22:24], line[19:21]]), 16))
 					line = " ".join([line.rstrip(), "Чтение реквизита", tagSwypedBack, errorTag, "\n"])
+					
+			elif command == 'EB':
+				decode(line[142:].rstrip())
+				line = "".join([line.rstrip(), " Комплексная команда формирования позиции: завершить формирование позиции ", "\"", decodedLine, "\" \n"])
 
 
 			#
@@ -200,10 +203,9 @@ def process(line, wholeCommandLine, command):
 
 			elif command == "E9":
 				if int(wholeCommandLine[25:27], 16) == 0:  # Здесь проверяется номер блока.
-					textString = line[37:].rstrip()
+					decode(line[37:].rstrip())
 				else:
-					textString = line[25:].rstrip()
-				decode(textString)		
+					decode(line[25:].rstrip())
 				line = "".join([line.rstrip(), " \"", decodedLine, "\" \n"])
 
 			# <55h> <Код ошибки (2)>
