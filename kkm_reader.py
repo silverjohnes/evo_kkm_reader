@@ -16,7 +16,7 @@ import process
 inTest = 0
 autoOpen = 1
 autoOpenZip = 1
-slugClearance = 1  #  Очистка строк обмена (>>>> и <<<<)
+slugClearance = 1  #  Очистка от строк обмена (>>>> и <<<<)
 outputPrefix = 'readable_'
 testInputFile = 'logs.txt'
 supportedFileTypes = ('.txt', '.zip')
@@ -45,13 +45,14 @@ def zipRoutine(fname):
 			os.remove(os.path.join(unzipFolder, file))
 		for file in insideDirs:
 			os.rmdir(os.path.join(unzipFolder, file))
-	#  Исключение папок из распаковки:
+	#  Распаковка содержимого архива (без папок):
 	with zipfile.ZipFile(inputFile, 'r') as inputZipFile:
 		for zipFileList in inputZipFile.infolist(): 
 			if zipFileList.filename[-1] == '/':
 				continue
 			zipFileList.filename = os.path.basename(zipFileList.filename)
 			inputZipFile.extract(zipFileList, os.path.join(os.getcwd(), fname))
+	#  Обработка разархивированного
 	os.chdir(os.path.join(os.getcwd(), fname))
 	for j in range(len(os.listdir())):
 		inputFile = os.listdir()[j]
@@ -60,6 +61,7 @@ def zipRoutine(fname):
 	for files in os.listdir(): 
 		if os.path.basename(files)[0:len(outputPrefix)] != outputPrefix:
 			os.remove(os.path.basename(files))
+	#
 	if autoOpenZip == 1:
 		openFile(os.getcwd())
 	os.chdir(beforeZipDir)
@@ -75,8 +77,8 @@ def fileProcess():
 			if line[14:16] == "> ":
 				command = line[16:18]
 				wholeCommandLine = line
-			if slugClearance == 1: 
-				if line[15:16] == ">" or line[15:16] == "<":
+			if line[15:16] == ">" or line[15:16] == "<":
+				if slugClearance == 1: 
 					continue				
 			output.write(process.process(line, wholeCommandLine, command)) #  То, ради чего всё затевалось.
 	print(">", outputFile)
