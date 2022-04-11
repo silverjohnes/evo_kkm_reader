@@ -116,7 +116,21 @@ def process(line, wholeCommandLine, command):
 					line = " ".join([line.rstrip(), "Демонстрационная печать:", cursor.fetchone()[0], "\n"])
 				except:
 					line = " ".join([line.rstrip(), "Демонстрационная печать:", errorSubCommand, "\n"])
-				
+			
+
+			elif command == '87':
+				decode(line[52:].rstrip())
+				line = "".join([line.rstrip(), " Печать поля: \"", decodedLine, "\" \n"])		
+
+
+			elif command == 'EE':
+				if len(line) > 26:
+					decode(line[58:].rstrip())
+					line = "".join([line.rstrip(), " Допечать отчета: \"", decodedLine, "\" \n"])
+				else:
+					line = " ".join([line.strip(), "Допечать отчета \n"])
+
+			
 			#  Расшифровка легенды запроса из Протокола. Длины параметров могут не соответствовать Эвотору (на Эво могут быть в два раза длиннее).
 			elif command == '91':
 				try:
@@ -221,11 +235,6 @@ def process(line, wholeCommandLine, command):
 					var = line[19:21],
 					cursor.execute("SELECT DESC FROM STATUS_CODE WHERE BIN = ?", var)
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
-				#  Расшифровка печати (не требуется, потому что в логах и так отображается в явном виде).
-				# if command == "87": # Конкретно к какой комманде применим
-					# textString = textString[52:].rstrip()
-					# decode(textString, "outer")
-					# line = "".join([line.rstrip(), ", текст: ", decodedLine, " \n"])
 					
 		
 		
