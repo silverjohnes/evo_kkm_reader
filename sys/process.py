@@ -126,7 +126,7 @@ def process(line, wholeCommandLine, command):
 			elif command == 'EE':
 				if len(line) > 26:
 					decode(line[58:].rstrip())
-					line = "".join([line.rstrip(), " Допечать отчета: \"", decodedLine, "\" \n"])
+					line = "".join([line.rstrip(), " Проверка кода марки: \"", decodedLine, "\" \n"])
 				else:
 					line = " ".join([line.strip(), "Допечать отчета \n"])
 
