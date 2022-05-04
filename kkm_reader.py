@@ -109,7 +109,7 @@ elif inTest == 1:
 	inputFile = testInputFile
 	checkFile()
 else:
-	print("Перетяните файлы с логами из любой папки на", os.path.basename(__file__), "\n")
+	print("Для обработки логов перетяните файлы с логами из любой папки на", os.path.basename(__file__), "\nЕсли вы запускаете программу правильно, но видите это сообщение, убедитесь, в качестве программы по умолчанию для открытия файлов с расширением .py стоит %WINDIR%\py.exe\n\n")
 	if sys.platform == 'win32':
 		os.system('pause')
 	else:
