@@ -40,7 +40,8 @@ def zipRoutine(fname):
 	global inputFile
 	beforeZipDir = os.getcwd()
 	#  Очистка целевой папки для разархивирования, если она есть:
-	for unzipFolder, insideDirs, insideFiles in os.walk(os.path.join(os.getcwd(), fname), topdown=False):
+	for unzipFolder, insideDirs, insideFiles in \
+	os.walk(os.path.join(os.getcwd(), fname), topdown=False):
 		for file in insideFiles:
 			os.remove(os.path.join(unzipFolder, file))
 		for file in insideDirs:
@@ -72,15 +73,17 @@ def fileProcess():
 	outputFile = outputPrefix + inputFile
 	command = "00"
 	wholeCommandLine = ""
-	with open(inputFile, 'r', encoding='utf-8') as input, open(outputFile, 'w', encoding='utf-8') as output:
+	with open(inputFile, 'r', encoding='utf-8') as input, \
+	open(outputFile, 'w', encoding='utf-8') as output:
 		for line in input:
 			if line[14:16] == "> ":
 				command = line[16:18]
 				wholeCommandLine = line
 			if line[15:16] == ">" or line[15:16] == "<":
 				if slugClearance == 1: 
-					continue				
-			output.write(process.process(line, wholeCommandLine, command)) #  То, ради чего всё затевалось.
+					continue
+			#  То, ради чего всё затевалось:
+			output.write(process.process(line, wholeCommandLine, command))
 	print(">", outputFile)
 	if isZip == 0:
 		#if inTest == 0:
@@ -109,7 +112,11 @@ elif inTest == 1:
 	inputFile = testInputFile
 	checkFile()
 else:
-	print("Для обработки логов перетяните файлы с логами из любой папки на", os.path.basename(__file__), "\nЕсли вы запускаете программу правильно, но видите это сообщение, убедитесь, в качестве программы по умолчанию для открытия файлов с расширением .py стоит %WINDIR%\py.exe\n\n")
+	print("Для обработки логов перетяните файлы с логами из любой папки на",
+	os.path.basename(__file__), "\nЕсли вы запускаете программу правильно,",
+	"но видите это сообщение, убедитесь, что в качестве ",
+	"программы по-умолчанию для открытия файлов с расширением .py ",
+    "стоит %WINDIR%\py.exe\n\n")
 	if sys.platform == 'win32':
 		os.system('pause')
 	else:
