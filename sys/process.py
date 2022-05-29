@@ -21,7 +21,7 @@ cursor = db.cursor()
 
 
 # Обработка строк.
-def process(line, wholeCommandLine, command):
+def process(line, wholeCommandLine, command, answerLine):
 	if len(line) > 14:  # проверка для обработки пустых строк
 	
 		# 
@@ -198,7 +198,7 @@ def process(line, wholeCommandLine, command):
 			answer = line[16:18]
 			# Костыль по регистру 55
 			if command == '91':
-				if wholeCommandLine[19:21] == '37':
+				if wholeCommandLine[19:21] == '37':  # Похоже, это расшифровка ответов на ошибки обновления ФР.
 					if line[25:27] == 'EC':
 						try:
 							error_55 = line[28:30],
@@ -213,6 +213,7 @@ def process(line, wholeCommandLine, command):
 									line = " ".join([line.rstrip(), bitMaskError, "\n"])
 						except:
 							line = " ".join([line.rstrip(), "Неизвестная ошибка обновления (проверьте обновление программы) ===+ \n"])
+					
 
 
 			elif command == "E9":
@@ -236,8 +237,20 @@ def process(line, wholeCommandLine, command):
 					cursor.execute("SELECT DESC FROM STATUS_CODE WHERE BIN = ?", var)
 					line = " ".join([line.rstrip(), cursor.fetchone()[0], "\n"])
 					
-		
-		
+					
+		# 
+		# ГРЯЗНАЯ ПОСТ-ОБРАБОТКА ОТВЕТОВ:
+		#
+		elif line[69:99] == "Не задан необходимый реквизит":
+			try:	
+				tag = int(answerLine[34:39].replace(" ", ""), 16),
+				cursor.execute("SELECT TAG, NAME FROM TAGS WHERE TAG = ?", tag)
+				tagAndName = cursor.fetchone()
+				line = "".join([line.rstrip(), " (", tagAndName[0], " \"", tagAndName[1], "\")", " \n"])
+			except:
+				pass
+					
+
 	return line
 
 
