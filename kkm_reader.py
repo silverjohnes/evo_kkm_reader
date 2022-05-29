@@ -73,17 +73,23 @@ def fileProcess():
 	outputFile = outputPrefix + inputFile
 	command = "00"
 	wholeCommandLine = ""
+	answerLine = ""
+	#pastCommand = ""
 	with open(inputFile, 'r', encoding='utf-8') as input, \
 	open(outputFile, 'w', encoding='utf-8') as output:
 		for line in input:
-			if line[14:16] == "> ":
-				command = line[16:18]
-				wholeCommandLine = line
 			if line[15:16] == ">" or line[15:16] == "<":
 				if slugClearance == 1: 
 					continue
+			elif line[14:16] == "> ":
+				command = line[16:18]
+				wholeCommandLine = line
+			elif line[14:16] == "< ":
+				answerLine = line
 			#  То, ради чего всё затевалось:
-			output.write(process.process(line, wholeCommandLine, command))
+			output.write(process.process(line, wholeCommandLine, command, \
+			answerLine))
+
 	print(">", outputFile)
 	if isZip == 0:
 		#if inTest == 0:
@@ -113,9 +119,9 @@ elif inTest == 1:
 	checkFile()
 else:
 	print("Для обработки логов перетяните файлы с логами из любой папки на",
-	os.path.basename(__file__), "\nЕсли вы запускаете программу правильно,",
-	"но видите это сообщение, убедитесь, что в качестве ",
-	"программы по-умолчанию для открытия файлов с расширением .py ",
+	os.path.basename(__file__), "\n\nЕсли вы запускаете программу правильно, "
+	"но видите это сообщение,\nубедитесь, что в качестве "
+	"программы по-умолчанию для открытия\nфайлов с расширением .py "
     "стоит %WINDIR%\py.exe\n\n")
 	if sys.platform == 'win32':
 		os.system('pause')
@@ -123,4 +129,4 @@ else:
 		input("Для продолжения нажмите Enter . . .")
 	quit()
 
-print()
+#print()
