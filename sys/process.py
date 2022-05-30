@@ -193,7 +193,7 @@ def process(line, wholeCommandLine, command, answerLine):
 			
 		# 
 		# ОБРАБОТЧИКИ ОТВЕТОВ:
-		if line[14:16] == '< ':
+		elif line[14:16] == '< ':
 		#
 			answer = line[16:18]
 			# Костыль по регистру 55
