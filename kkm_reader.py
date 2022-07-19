@@ -23,6 +23,13 @@ supportedFileTypes = ('.txt', '.zip')
 
 
 
+# Удаление process.py из корневой папки
+try:
+	os.remove('process.py')
+except:
+	pass
+
+
 #  Разбор типов файлов.
 def checkFile(): 
 	global isZip
@@ -129,4 +136,11 @@ else:
 		input("Для продолжения нажмите Enter . . .")
 	quit()
 
+
+#  Удаление устаревшего файла.
+os.chdir(os.path.dirname(__file__))
+try:
+	os.remove('process.py')
+except:
+	pass
 #print()
