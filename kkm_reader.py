@@ -23,12 +23,6 @@ supportedFileTypes = ('.txt', '.zip')
 
 
 
-# Удаление process.py из корневой папки
-try:
-	os.remove('process.py')
-except:
-	pass
-
 
 #  Разбор типов файлов.
 def checkFile(): 
