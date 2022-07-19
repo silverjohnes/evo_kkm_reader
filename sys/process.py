@@ -124,9 +124,19 @@ def process(line, wholeCommandLine, command, answerLine):
 
 
 			elif command == 'EE':
-				if len(line) > 26:
+				subCommand = line[19:21]
+				if subCommand == '00':
+					line = " ".join([line.strip(), "Запрос статуса по работе с кодами маркировки \n"])
+				elif subCommand == '01':
 					decode(line[58:].rstrip())
 					line = "".join([line.rstrip(), " Проверка кода марки: \"", decodedLine, "\" \n"])
+				elif subCommand == '02':
+					if line[22:24] == '01':
+						line = " ".join([line.strip(), "Сохранить результаты проверки КМ \n"])
+					else:
+						line = " ".join([line.strip(), "Не сохранять результаты проверки КМ \n"])
+				elif subCommand == '03':
+					line = " ".join([line.strip(), "Очистить все результаты проверки КМ \n"])
 				else:
 					line = " ".join([line.strip(), "Допечать отчета \n"])
 
@@ -161,7 +171,7 @@ def process(line, wholeCommandLine, command, answerLine):
 						line = " ".join([line.rstrip(), "Запись реквизита", tagSwypedBack, errorTag, "\n"])
 				else:
 					decode(line[34:].rstrip())
-					line = " ".join([line.rstrip(), "продолжение записи реквизита, блок", str(valueBlockNumberW + 1), ":", decodedLine, "\n"])
+					line = "".join([line.rstrip(), "продолжение записи реквизита, блок ", str(valueBlockNumberW + 1), ": \"", decodedLine, "\" \n"])
 
 
 			elif command == 'E9':
