@@ -11,6 +11,7 @@ import sys
 import zipfile
 sys.path.append(os.path.join(os.path.dirname(__file__), 'sys'))
 import process
+import subprocess
 
 
 inTest = 0
